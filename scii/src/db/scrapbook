@@ -1,0 +1,2 @@
+select name, quantity_on_hand, server_id from product where product_list_oid = 46974
+select * from invoice order by oid

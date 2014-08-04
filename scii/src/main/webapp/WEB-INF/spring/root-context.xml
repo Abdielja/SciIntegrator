@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" 
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc" 
+       xmlns:tx="http://www.springframework.org/schema/tx" 
+       xmlns:context="http://www.springframework.org/schema/context" 
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation=" http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.2.xsd 
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd 
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd 
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd
+       http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.2.xsd
+       http://www.springframework.org/schema/util  http://www.springframework.org/schema/util/spring-util-3.2.xsd"
+>
+       	
+
+	<!-- Root Context: defines shared resources visible to all other web components -->
+
+	<!-- Activates various annotations to be detected in bean classes -->
+	 <context:annotation-config/> 
+	
+	<!-- Load configuration properties files -->
+	<context:property-placeholder
+	location="/config/scii.properties,
+	          /config/persistence.properties"
+	ignore-unresolvable="true"/>	
+
+  <!-- ***** BEGIN: SCII Application Settings Bean ***** -->
+
+  <bean id="appSettings" class="com.sci.integrator.domain.core.AppSettings"> 
+    <property name="serverUrl" value="${remote.server.url}"/> 
+    <property name="maxRetries" value="${transaction.max.retries}"/>
+    <property name="maxPendingInvoices" value="${transaction.open.pending.invoices.max}"/> 
+  </bean>
+
+  <!-- ***** END: SCII Application Settings Bean ***** -->
+
+
+	<!-- ***** BEGIN: Common Persistence Beans ***** -->
+	 
+	 <!-- Load persistence properties from file
+  <context:property-placeholder location="/config/persistence.properties" />
+   -->
+   
+	<!-- DataSource -->
+	<bean class="org.apache.commons.dbcp.BasicDataSource" id="dataSource" destroy-method="close">
+	
+		<property name="driverClassName" value="${database.driver}"/> 
+		<property name="url" value="${database.url}"/> 
+		<property name="username" value="${database.user}"/> 
+		<property name="password" value="${database.password}"/>
+	  
+		<!-- <property name="driverClassName" value="org.hsqldb.jdbcDriver"/> 
+		<property name="url" value="jdbc:hsqldb:hsql://localhost:9001"/> 
+		<property name="username" value="sa"/> 
+		<property name="password" value=""/> -->
+	
+	</bean> 
+
+<!-- ***** END: Common Persisntece Beans ***** -->
+
+ 
+<!-- ***** BEGIN: Hibernate Persistence Layer Definitition (transfer this to a xml file and use import in order to facilitate DB provider switching) ***** -->
+ 
+<!-- Hibernate Session Factory -->
+<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"> 
+  <property name="dataSource" ref="dataSource" /> 
+
+  <property name="annotatedClasses"> 
+    <list> 
+
+      <value>com.sci.integrator.domain.core.SyncData</value>
+      <value>com.sci.integrator.domain.core.UserData</value>
+      <value>com.sci.integrator.domain.core.UserPeriodData</value>
+      <value>com.sci.integrator.domain.core.UserPeriodProduct</value>
+      <value>com.sci.integrator.domain.core.UserPeriodPaymentDetail</value>
+      <value>com.sci.integrator.domain.core.UserPeriodCashDetail</value>
+        
+      <value>com.sci.integrator.domain.customer.Customer</value>
+      <value>com.sci.integrator.domain.customer.CustomerExtra</value>
+      <value>com.sci.integrator.domain.customer.Customers</value>
+      <value>com.sci.integrator.domain.core.Products</value>
+      <value>com.sci.integrator.domain.core.Product</value>
+
+      <value>com.sci.integrator.domain.core.Invoices</value>
+      <value>com.sci.integrator.domain.order.Orders</value>
+
+      <value>com.sci.integrator.domain.core.User</value>
+      <value>com.sci.integrator.domain.core.Roles</value>
+      <value>com.sci.integrator.domain.core.Role</value>
+      <value>com.sci.integrator.domain.core.Routes</value>
+      <value>com.sci.integrator.domain.core.Route</value>
+
+      <value>com.sci.integrator.domain.core.Identifiable</value> 
+      <value>com.sci.integrator.domain.core.LogEntry</value>
+
+      <value>com.sci.integrator.domain.core.Provider</value>
+
+      <value>com.sci.integrator.domain.core.Transaction</value> 
+      <value>com.sci.integrator.domain.core.TransactionError</value> 
+      <value>com.sci.integrator.domain.core.TransactionStatus</value> 
+      <value>com.sci.integrator.domain.core.TransactionOpen</value> 
+
+      <value>com.sci.integrator.domain.quotation.TransactionQuotation</value>
+      <value>com.sci.integrator.domain.quotation.Quotation</value>
+      <value>com.sci.integrator.domain.quotation.QuotationLine</value>
+
+      <value>com.sci.integrator.domain.order.TransactionOrder</value>
+      <value>com.sci.integrator.domain.order.Order</value>
+      <value>com.sci.integrator.domain.order.OrderLine</value>
+
+      <value>com.sci.integrator.domain.invoice.TransactionInvoice</value>
+      <value>com.sci.integrator.domain.invoice.Invoice</value>
+      <value>com.sci.integrator.domain.invoice.InvoiceLine</value>
+      <value>com.sci.integrator.domain.invoice.TransactionInvoiceReversal</value>
+
+      <value>com.sci.integrator.domain.payment.TransactionPayment</value>
+      <value>com.sci.integrator.domain.payment.Payment</value>
+      <value>com.sci.integrator.domain.payment.PaymentMethod</value>
+      <value>com.sci.integrator.domain.payment.Payments</value>
+
+      <value>com.sci.integrator.domain.incidence.TransactionIncidence</value>
+      <value>com.sci.integrator.domain.incidence.Incidence</value>
+      <value>com.sci.integrator.domain.incidence.IncidenceType</value>
+
+      <value>com.sci.integrator.domain.customer.TransactionCustomerExtra</value>
+      <value>com.sci.integrator.domain.customer.Customer</value>
+      <value>com.sci.integrator.domain.customer.CustomerExtra</value>
+
+    </list> 
+  </property> 
+
+  <property name="hibernateProperties"> 
+    <value>
+      hibernate.dialect=${hibernate.dialect}
+      hibernate.show_sql=${hibernate.show_sql}
+    </value>
+  </property>    
+ </bean>
+ 
+<!-- Hibernate Transaction Manager -->
+ 
+  <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager"> 
+    <property name="sessionFactory" ref="sessionFactory"/> 
+  </bean>
+ 
+  <tx:annotation-driven transaction-manager="transactionManager" />
+ 
+<!-- Hibernate DAO Definititions -->
+
+ <bean id="userDao" class="com.sci.integrator.persistence.hibernate.UserDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>
+ </bean> 
+
+ <bean id="syncDataDao" class="com.sci.integrator.persistence.hibernate.SyncDataDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>
+ </bean> 
+
+ <bean id="userDataDao" class="com.sci.integrator.persistence.hibernate.UserDataDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>
+ </bean> 
+
+ <bean id="transactionDao" class="com.sci.integrator.persistence.hibernate.TransactionDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>
+ </bean> 
+
+ <bean id="rolesDao" class="com.sci.integrator.persistence.hibernate.RolesDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>
+ </bean> 
+
+ <bean id="routeDao" class="com.sci.integrator.persistence.hibernate.RouteDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>
+ </bean> 
+
+ <bean id="customersDao" class="com.sci.integrator.persistence.hibernate.CustomersDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>
+ </bean> 
+
+ <bean id="productDao" class="com.sci.integrator.persistence.hibernate.ProductsDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>
+ </bean> 
+
+ <bean id="invoiceDao" class="com.sci.integrator.persistence.hibernate.InvoiceDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>
+ </bean> 
+
+ <bean id="orderDao" class="com.sci.integrator.persistence.hibernate.OrderDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>
+ </bean> 
+
+ <bean id="paymentDao" class="com.sci.integrator.persistence.hibernate.PaymentDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>
+ </bean> 
+
+ <bean id="paymentMethodDao" class="com.sci.integrator.persistence.hibernate.PaymentMethodDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>
+ </bean> 
+
+ <bean id="incidenceDao" class="com.sci.integrator.persistence.hibernate.IncidenceDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>
+ </bean> 
+
+ <bean id="logEntryDao" class="com.sci.integrator.persistence.hibernate.LogEntryDaoImpl">
+  <property name="sessionFactory" ref="sessionFactory"/>
+ </bean> 
+
+<!-- ***** END: Hibernate Persistence Layer Definitition ***** -->
+ 
+
+<!-- ***** BEGIN: JAXB declaration ***** -->
+
+  <bean id="marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller"> 
+
+	  <property name="classesToBeBound"> 
+	    <list>
+	    
+        <value>com.sci.integrator.domain.core.SyncData</value>
+        <value>com.sci.integrator.domain.core.UserData</value>
+	      
+        <value>com.sci.integrator.domain.core.Transactions</value>
+        <value>com.sci.integrator.domain.core.Transaction</value>
+        <value>com.sci.integrator.domain.core.TransactionError</value> 
+        <value>com.sci.integrator.domain.core.TransactionStatus</value> 
+        <value>com.sci.integrator.domain.core.TransactionOpen</value> 
+
+
+        <value>com.sci.integrator.domain.core.Users</value>
+        <value>com.sci.integrator.domain.core.User</value>
+        <value>com.sci.integrator.domain.core.Roles</value>
+        <value>com.sci.integrator.domain.core.Role</value>
+        <value>com.sci.integrator.domain.core.Routes</value>
+        <value>com.sci.integrator.domain.core.Route</value>
+	      <value>com.sci.integrator.domain.customer.Customer</value>
+        <value>com.sci.integrator.domain.customer.CustomerExtra</value>
+	      <value>com.sci.integrator.domain.customer.Customers</value>
+        <value>com.sci.integrator.domain.core.Products</value>
+        <value>com.sci.integrator.domain.core.Product</value>
+        <value>com.sci.integrator.domain.core.ProductPrices</value>
+        <value>com.sci.integrator.domain.core.ProductPrice</value>
+        <value>com.sci.integrator.domain.core.Invoices</value>
+
+        <value>com.sci.integrator.domain.core.LogEntry</value>
+        
+        <value>com.sci.integrator.domain.core.Provider</value>
+        <value>com.sci.integrator.domain.core.SciiResult</value>
+
+	      <value>com.sci.integrator.domain.quotation.Quotation</value>
+	      <value>com.sci.integrator.domain.quotation.QuotationLine</value>
+        <value>com.sci.integrator.domain.quotation.TransactionQuotation</value>
+
+	      <value>com.sci.integrator.domain.order.Order</value>
+	      <value>com.sci.integrator.domain.order.OrderLine</value>
+        <value>com.sci.integrator.domain.order.Orders</value>
+	      <value>com.sci.integrator.domain.order.TransactionOrder</value>
+
+        <value>com.sci.integrator.domain.invoice.Invoice</value>
+        <value>com.sci.integrator.domain.invoice.InvoiceLine</value>
+        <value>com.sci.integrator.domain.invoice.TransactionInvoice</value>
+        <value>com.sci.integrator.domain.invoice.TransactionInvoiceReversal</value>
+
+        <value>com.sci.integrator.domain.payment.TransactionPayment</value>
+        <value>com.sci.integrator.domain.payment.Payment</value>
+        <value>com.sci.integrator.domain.payment.PaymentMethod</value>
+        <value>com.sci.integrator.domain.payment.Payments</value>
+
+	      <value>com.sci.integrator.domain.incidence.TransactionIncidence</value>
+	      <value>com.sci.integrator.domain.incidence.Incidence</value>
+	      <value>com.sci.integrator.domain.incidence.IncidenceType</value>
+
+	      <value>com.sci.integrator.domain.customer.TransactionCustomerExtra</value>
+	      <value>com.sci.integrator.domain.customer.Customer</value>
+	      <value>com.sci.integrator.domain.customer.CustomerExtra</value>
+
+        <!-- ***** BEGIN: JAXB DTOs declaration ***** -->
+        
+        <value>com.sci.integrator.controlers.dto.UserDto</value>
+        <value>com.sci.integrator.controlers.dto.UserDtoList</value>
+
+        <!-- ***** END: JAXB DTOs declaration ***** -->
+
+	    </list>
+	  </property>
+
+    <property name="marshallerProperties">
+        <map>
+            <entry>
+                <key>
+                    <util:constant static-field="javax.xml.bind.Marshaller.JAXB_FORMATTED_OUTPUT" />
+               </key>
+              <value type="java.lang.Boolean">true</value>
+            </entry>
+            <entry>
+                <key>
+                    <util:constant static-field="javax.xml.bind.Marshaller.JAXB_FRAGMENT" />
+               </key>
+              <value type="java.lang.Boolean">true</value>
+            </entry>
+        </map>
+    </property>
+
+  </bean>
+
+<!-- ***** END: JAXB declaration ***** -->
+
+
+<!-- BEGIN: Definitions of Persistence Services Implementations -->
+
+   <bean id="loggerService" class="com.sci.integrator.services.relational.SciiLoggerService" /> 
+
+   <bean id="userService" class="com.sci.integrator.services.relational.UserServiceImpl">
+     <property name="userDao" ref="userDao" />
+   </bean>
+
+   <bean id="syncDataService" class="com.sci.integrator.services.relational.SyncDataServiceImpl">
+     <property name="syncDataDao" ref="syncDataDao" />
+     <property name="customersDao" ref="customersDao" />
+     <property name="invoiceDao" ref="invoiceDao" />
+   </bean>
+  
+   <bean id="userDataService" class="com.sci.integrator.services.relational.UserDataServiceImpl">
+     <property name="userDataDao" ref="userDataDao" />
+     <property name="invoiceDao" ref="invoiceDao" />
+     <property name="paymentDao" ref="paymentDao" />
+   </bean>
+  
+	 <bean id="transactionService" class="com.sci.integrator.services.relational.TransactionServiceImpl">
+	   <property name="transactionDao" ref="transactionDao" />
+     <property name="userDao" ref="userDao" />
+	 </bean>
+	
+   <bean id="routeService" class="com.sci.integrator.services.relational.RouteServiceImpl">
+     <property name="routeDao" ref="routeDao" />
+   </bean>
+  
+   <bean id="invoiceService" class="com.sci.integrator.services.relational.InvoiceServiceImpl">
+     <property name="invoiceDao" ref="invoiceDao" />
+   </bean>
+  
+   <bean id="orderService" class="com.sci.integrator.services.relational.OrderServiceImpl">
+     <property name="orderDao" ref="orderDao" />
+   </bean>
+  
+   <bean id="paymentMethodService" class="com.sci.integrator.services.relational.PaymentMethodServiceImpl">
+     <property name="paymentMethodDao" ref="paymentMethodDao" />
+   </bean>
+  
+   <bean id="productService" class="com.sci.integrator.services.relational.ProductServiceImpl">
+     <property name="productDao" ref="productDao" />
+   </bean>
+  
+   <bean id="incidenceService" class="com.sci.integrator.services.relational.IncidenceServiceImpl">
+     <property name="incidenceDao" ref="incidenceDao" />
+   </bean>
+  
+<!-- END: Definitions of Services Implementations -->
+
+
+ <!-- BEGIN: Definitions of Application Events Handlers -->
+  
+    <bean id="transactionHandler" class="com.sci.integrator.handlers.TransactionHandler" /> 
+
+    <bean id="failedTransactionsHandler" class="com.sci.integrator.handlers.FailedTransactionsHandler" /> 
+
+    <bean id="syncProcessHandler" class="com.sci.integrator.handlers.SyncProcessHandler" /> 
+
+ <!-- END: Definitions of Application Events Handlers -->
+
+
+ <!-- BEGIN: Definitions of Providers Services -->
+
+    <bean id="obUserProviderGateway" class="com.sci.integrator.provider.openbravo.ObUserProviderGateway">
+      <constructor-arg value="${remote.server.url}"/>
+    </bean>
+    
+    <bean id="obTransactionProviderGateway" class="com.sci.integrator.provider.openbravo.ObTransactionProviderGateway">
+      <constructor-arg value="${remote.server.url}"/>
+    </bean>
+    
+    <bean id="obProviderSyncProcess" class="com.sci.integrator.provider.openbravo.ObSyncProcess">
+      <constructor-arg value="${remote.server.url}"/>
+    </bean>
+    
+   <bean id="provider" class="com.sci.integrator.provider.openbravo.ObProvider">
+     <property name="baseUrl" value="${remote.server.url}"/>  
+     <property name="providerSyncProcess" ref="obProviderSyncProcess" />
+     <property name="userProviderGateway" ref="obUserProviderGateway" />
+     <property name="transactionProviderGateway" ref="obTransactionProviderGateway" />
+   </bean>
+
+<!-- END: Definitions of Providers Services Implementations to be used in SCII services -->
+  
+
+  <!--  Transaction Scheduler define start -->
+
+	<task:scheduled-tasks>
+	    <task:scheduled ref="transactionHandler" method="process" cron="*/10 * * * * ?"/>
+	</task:scheduled-tasks>
+
+  <!--  Failed Transactions Scheduler define start -->
+
+  <task:scheduled-tasks>
+      <task:scheduled ref="failedTransactionsHandler" method="process" cron="* */15 * * * ?"/>
+  </task:scheduled-tasks>
+
+<!-- 
+  <task:scheduled-tasks>
+      <task:scheduled ref="syncProcessHandler" method="process" cron="*/30 * * * * ?"/>
+  </task:scheduled-tasks>
+ -->
+ 
+<!--  Transaction Scheduler define End -->
+
+</beans>

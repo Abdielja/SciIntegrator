@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<link rel="stylesheet" href="resources/js/jqwidgets/styles/jqx.base.css" type="text/css"/>
+<script type="text/javascript" src="resources/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="resources/js/jqwidgets/jqxcore.js"></script>
+<script type="text/javascript" src="resources/js/jqwidgets/jqxmenu.js"></script>
+
+</head>
+<body>
+
+    <div id='content'>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                // Create a jqxMenu
+                $("#jqxMenu").jqxMenu({ width: 600, height: 30});
+            });
+        </script>
+        <div id='jqxWidget'>
+            <div id='jqxMenu'>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li>About Us
+                        <ul>
+                            <li><a href="#">History</a></li>
+                            <li><a href="#">Our Vision</a></li>
+                        </ul>
+                    </li>
+                    <li>Services
+                    </li>
+                    <li>Products
+                        <ul>
+                            <li><a href="#">New</a>
+                                <ul>
+                                    <li><a href="#">Corporate Use</a></li>
+                                    <li><a href="#">Private Use</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Used</a>
+                                <ul>
+                                    <li><a href="#">Corporate Use</a></li>
+                                    <li><a href="#">Private Use</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Featured</a></li>
+                         </ul>
+                    </li>
+                    <li><a href="#">Gallery</a></li>
+                    <li><a href="#">Events</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>

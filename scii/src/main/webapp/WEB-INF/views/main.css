@@ -1,0 +1,19 @@
+body 
+{
+	background: white;
+	color: blue 
+}
+
+.tableBodyClass
+{
+	font-family: arial;
+	font-size: 10pt
+}
+
+.tableHeaderClass
+{
+  background:blue;
+	font-family: arial;
+  font-size:10pt;
+  font-weight: bold
+}

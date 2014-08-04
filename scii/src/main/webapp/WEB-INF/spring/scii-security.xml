@@ -1,0 +1,30 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+    xmlns:beans="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                    http://www.springframework.org/schema/security 
+                    http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+    <http use-expressions="true">
+        <intercept-url pattern="/**" access="permitAll" />
+        <form-login />
+    </http>
+
+    <authentication-manager>
+        <authentication-provider>
+            <user-service>
+                <user name="abdiel" password="123" authorities="supervisor, teller, user" />
+                <user name="ENatis" password="123" authorities="teller, user" />
+                <user name="RWu" password="123" authorities="teller, user" />
+                <user name="AMartinez" password="123" authorities="teller, user" />
+                <user name="NMartinez" password="123" authorities="teller, user" />
+                <user name="LTunon" password="123" authorities="teller, user" />
+                <user name="RQuintanilla" password="123" authorities="teller, user" />
+                <user name="AChavarria" password="123" authorities="teller, user" />
+                <user name="NMadero" password="123" authorities="teller, user" />
+            </user-service>
+        </authentication-provider>
+    </authentication-manager>
+
+</beans:beans>   
