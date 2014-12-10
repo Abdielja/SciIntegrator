@@ -19,6 +19,7 @@ delete from payments;
 delete from quotation;
 delete from sales_order_line;
 delete from sales_order;
+delete from orders;
 delete from incidence;
 delete from log;
 

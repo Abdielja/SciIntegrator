@@ -127,6 +127,7 @@ public class TransactionPayment extends Transaction implements Serializable
     {
       this.setstatus(Transaction.STATUS_PROCESSED);
       this.getpayment().setstatus(Payment.STATUS_PROCESSED);
+      this.getpayment().getinvoice().setstatus(Invoice.STATUS_PAID);
       System.out.println("Payment " + this.getpayment().getoid() + " processed in ERP");
     }
     else

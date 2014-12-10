@@ -80,6 +80,7 @@ public class TransactionInvoiceReversal extends Transaction
      * Esta validacion es para asegurarse de que la factura, si es al contado, 
      * halla sido pagada antes de tratar de reversarla. -- Abdiel. Julio 17, 2014. 
      */
+    /*
     if (invoice.getstatus() != Invoice.STATUS_PAID)
     {
       if (!invoice.isCredit())
@@ -89,7 +90,7 @@ public class TransactionInvoiceReversal extends Transaction
         return sr;        
       }
     }
-    
+    */
     return sr;
   }
 
