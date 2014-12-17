@@ -30,6 +30,7 @@ import com.sci.integrator.domain.order.Order;
 import com.sci.integrator.domain.order.OrderLine;
 import com.sci.integrator.domain.payment.PaymentMethod;
 import com.sci.integrator.helpers.XmlHelper;
+import com.sci.integrator.transaction.Transaction;
 
 /**
  * @author Abdiel Jaramillo Ojedis

@@ -15,24 +15,24 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.sci.integrator.domain.core.SciiResult;
-import com.sci.integrator.domain.core.Transaction;
 import com.sci.integrator.domain.core.TransactionOpen;
-import com.sci.integrator.domain.core.Transactions;
-import com.sci.integrator.domain.customer.TransactionCustomerExtra;
-import com.sci.integrator.domain.incidence.TransactionIncidence;
 import com.sci.integrator.domain.invoice.Invoice;
 import com.sci.integrator.domain.invoice.InvoiceLine;
-import com.sci.integrator.domain.invoice.TransactionInvoice;
-import com.sci.integrator.domain.invoice.TransactionInvoiceReversal;
 import com.sci.integrator.domain.order.Order;
 import com.sci.integrator.domain.order.OrderLine;
-import com.sci.integrator.domain.order.TransactionOrder;
 import com.sci.integrator.domain.payment.Payment;
-import com.sci.integrator.domain.payment.TransactionPayment;
 import com.sci.integrator.domain.quotation.Quotation;
 import com.sci.integrator.domain.quotation.QuotationLine;
-import com.sci.integrator.domain.quotation.TransactionQuotation;
 import com.sci.integrator.persistence.ITransactionDAO;
+import com.sci.integrator.provider.openbravo.transaction.TransactionCustomerExtra;
+import com.sci.integrator.provider.openbravo.transaction.TransactionIncidence;
+import com.sci.integrator.provider.openbravo.transaction.TransactionInvoice;
+import com.sci.integrator.provider.openbravo.transaction.TransactionInvoiceReversal;
+import com.sci.integrator.provider.openbravo.transaction.TransactionOrder;
+import com.sci.integrator.provider.openbravo.transaction.TransactionPayment;
+import com.sci.integrator.provider.openbravo.transaction.TransactionQuotation;
+import com.sci.integrator.transaction.Transaction;
+import com.sci.integrator.transaction.Transactions;
 
 /**
  * @author Abdiel Jaramillo Ojedis

@@ -100,34 +100,34 @@
 
       <value>com.sci.integrator.domain.core.Provider</value>
 
-      <value>com.sci.integrator.domain.core.Transaction</value> 
-      <value>com.sci.integrator.domain.core.TransactionError</value> 
-      <value>com.sci.integrator.domain.core.TransactionStatus</value> 
+      <value>com.sci.integrator.transaction.Transaction</value> 
+      <value>com.sci.integrator.transaction.TransactionError</value> 
+      <value>com.sci.integrator.transaction.TransactionStatus</value> 
       <value>com.sci.integrator.domain.core.TransactionOpen</value> 
 
-      <value>com.sci.integrator.domain.quotation.TransactionQuotation</value>
+      <value>com.sci.integrator.provider.openbravo.transaction.TransactionQuotation</value>
       <value>com.sci.integrator.domain.quotation.Quotation</value>
       <value>com.sci.integrator.domain.quotation.QuotationLine</value>
 
-      <value>com.sci.integrator.domain.order.TransactionOrder</value>
+      <value>com.sci.integrator.provider.openbravo.transaction.TransactionOrder</value>
       <value>com.sci.integrator.domain.order.Order</value>
       <value>com.sci.integrator.domain.order.OrderLine</value>
 
-      <value>com.sci.integrator.domain.invoice.TransactionInvoice</value>
+      <value>com.sci.integrator.provider.openbravo.transaction.TransactionInvoice</value>
       <value>com.sci.integrator.domain.invoice.Invoice</value>
       <value>com.sci.integrator.domain.invoice.InvoiceLine</value>
-      <value>com.sci.integrator.domain.invoice.TransactionInvoiceReversal</value>
+      <value>com.sci.integrator.provider.openbravo.transaction.TransactionInvoiceReversal</value>
 
-      <value>com.sci.integrator.domain.payment.TransactionPayment</value>
+      <value>com.sci.integrator.provider.openbravo.transaction.TransactionPayment</value>
       <value>com.sci.integrator.domain.payment.Payment</value>
       <value>com.sci.integrator.domain.payment.PaymentMethod</value>
       <value>com.sci.integrator.domain.payment.Payments</value>
 
-      <value>com.sci.integrator.domain.incidence.TransactionIncidence</value>
+      <value>com.sci.integrator.provider.openbravo.transaction.TransactionIncidence</value>
       <value>com.sci.integrator.domain.incidence.Incidence</value>
       <value>com.sci.integrator.domain.incidence.IncidenceType</value>
 
-      <value>com.sci.integrator.domain.customer.TransactionCustomerExtra</value>
+      <value>com.sci.integrator.provider.openbravo.transaction.TransactionCustomerExtra</value>
       <value>com.sci.integrator.domain.customer.Customer</value>
       <value>com.sci.integrator.domain.customer.CustomerExtra</value>
 
@@ -221,10 +221,10 @@
         <value>com.sci.integrator.domain.core.SyncData</value>
         <value>com.sci.integrator.domain.core.UserData</value>
 	      
-        <value>com.sci.integrator.domain.core.Transactions</value>
-        <value>com.sci.integrator.domain.core.Transaction</value>
-        <value>com.sci.integrator.domain.core.TransactionError</value> 
-        <value>com.sci.integrator.domain.core.TransactionStatus</value> 
+        <value>com.sci.integrator.transaction.Transactions</value>
+        <value>com.sci.integrator.transaction.Transaction</value>
+        <value>com.sci.integrator.transaction.TransactionError</value> 
+        <value>com.sci.integrator.transaction.TransactionStatus</value> 
         <value>com.sci.integrator.domain.core.TransactionOpen</value> 
 
 
@@ -250,28 +250,28 @@
 
 	      <value>com.sci.integrator.domain.quotation.Quotation</value>
 	      <value>com.sci.integrator.domain.quotation.QuotationLine</value>
-        <value>com.sci.integrator.domain.quotation.TransactionQuotation</value>
+        <value>com.sci.integrator.provider.openbravo.transaction.TransactionQuotation</value>
 
 	      <value>com.sci.integrator.domain.order.Order</value>
 	      <value>com.sci.integrator.domain.order.OrderLine</value>
         <value>com.sci.integrator.domain.order.Orders</value>
-	      <value>com.sci.integrator.domain.order.TransactionOrder</value>
+	      <value>com.sci.integrator.provider.openbravo.transaction.TransactionOrder</value>
 
         <value>com.sci.integrator.domain.invoice.Invoice</value>
         <value>com.sci.integrator.domain.invoice.InvoiceLine</value>
-        <value>com.sci.integrator.domain.invoice.TransactionInvoice</value>
-        <value>com.sci.integrator.domain.invoice.TransactionInvoiceReversal</value>
+        <value>com.sci.integrator.provider.openbravo.transaction.TransactionInvoice</value>
+        <value>com.sci.integrator.provider.openbravo.transaction.TransactionInvoiceReversal</value>
 
-        <value>com.sci.integrator.domain.payment.TransactionPayment</value>
+        <value>com.sci.integrator.provider.openbravo.transaction.TransactionPayment</value>
         <value>com.sci.integrator.domain.payment.Payment</value>
         <value>com.sci.integrator.domain.payment.PaymentMethod</value>
         <value>com.sci.integrator.domain.payment.Payments</value>
 
-	      <value>com.sci.integrator.domain.incidence.TransactionIncidence</value>
+	      <value>com.sci.integrator.provider.openbravo.transaction.TransactionIncidence</value>
 	      <value>com.sci.integrator.domain.incidence.Incidence</value>
 	      <value>com.sci.integrator.domain.incidence.IncidenceType</value>
 
-	      <value>com.sci.integrator.domain.customer.TransactionCustomerExtra</value>
+	      <value>com.sci.integrator.provider.openbravo.transaction.TransactionCustomerExtra</value>
 	      <value>com.sci.integrator.domain.customer.Customer</value>
 	      <value>com.sci.integrator.domain.customer.CustomerExtra</value>
 

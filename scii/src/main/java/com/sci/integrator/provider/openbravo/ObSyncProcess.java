@@ -15,11 +15,11 @@ import com.sci.integrator.domain.core.AppSettings;
 import com.sci.integrator.domain.core.SciiRequest;
 import com.sci.integrator.domain.core.SciiResponse;
 import com.sci.integrator.domain.core.SyncData;
-import com.sci.integrator.domain.core.Transaction;
 import com.sci.integrator.provider.IProvider;
 import com.sci.integrator.provider.IProviderSyncProcess;
 import com.sci.integrator.provider.RestBaseProviderGateway;
 import com.sci.integrator.services.ISyncDataService;
+import com.sci.integrator.transaction.Transaction;
 
 
 public class ObSyncProcess extends RestBaseProviderGateway implements IProviderSyncProcess

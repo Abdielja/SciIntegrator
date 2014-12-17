@@ -6,9 +6,9 @@ package com.sci.integrator.persistence;
 import java.util.Date;
 import java.util.List;
 
-import com.sci.integrator.domain.core.Transactions;
 import com.sci.integrator.domain.core.User;
 import com.sci.integrator.domain.core.UserData;
+import com.sci.integrator.transaction.Transactions;
 
 /**
  * @author Abdiel

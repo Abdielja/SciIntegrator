@@ -3,8 +3,8 @@
  */
 package com.sci.integrator.persistence;
 
-import com.sci.integrator.domain.core.Transaction;
-import com.sci.integrator.domain.core.Transactions;
+import com.sci.integrator.transaction.Transaction;
+import com.sci.integrator.transaction.Transactions;
 
 /**
  * @author Abdiel

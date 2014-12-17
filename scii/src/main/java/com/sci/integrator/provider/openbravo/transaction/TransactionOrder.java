@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.sci.integrator.domain.quotation;
+package com.sci.integrator.provider.openbravo.transaction;
 
 import java.io.Serializable;
 import java.io.StringWriter;
@@ -20,20 +20,18 @@ import javax.xml.xpath.XPathConstants;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.HttpServerErrorException;
 import org.w3c.dom.Node;
 
 import com.sci.integrator.domain.core.SciiException;
 import com.sci.integrator.domain.core.SciiRequest;
 import com.sci.integrator.domain.core.SciiResponse;
 import com.sci.integrator.domain.core.SciiResult;
-import com.sci.integrator.domain.core.Transaction;
-import com.sci.integrator.domain.quotation.Quotation;
+import com.sci.integrator.domain.order.Order;
+import com.sci.integrator.domain.order.OrderLine;
 import com.sci.integrator.helpers.XmlHelper;
+import com.sci.integrator.transaction.Transaction;
 
 /**
  * @author Abdiel Jaramillo Ojedis
@@ -41,54 +39,65 @@ import com.sci.integrator.helpers.XmlHelper;
  */
 
 @Entity
-@XmlRootElement(name="transactionQuotation")
-@DiscriminatorValue(value="0")
+@XmlRootElement(name="transactionOrder")
+@DiscriminatorValue(value="1")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class TransactionQuotation extends Transaction implements Serializable
+public class TransactionOrder extends Transaction implements Serializable
 {
 
   /**
    * 
    */
   private static final long serialVersionUID = 1L;
+
   
   // ***** Properties *****
   
-  private Quotation quotation;
-
-  // *** Quotation  ***
-  @OneToOne(targetEntity=Quotation.class)
+  //@XmlElement(name="invoice")  
+  private Order order;
+  
+  // *** Order  ***
+  @OneToOne(targetEntity=Order.class)
   @Cascade({CascadeType.SAVE_UPDATE})
   @JoinColumn(name="trx_object_oid")
-  public Quotation getquotation()
+  public Order getorder()
   {
-    return quotation;
+    return order;
   }
 
-  public void setquotation(Quotation quotation)
+  public void setorder(Order order)
   {
-    this.quotation = quotation;
+    this.order = order;
   }
 
-  // ***** ITransaction Implementation Methods *****
+  public SciiResult process()
+  {
+    SciiResult result = null;
+
+    super.process();
+
+    return result;
+  }
+
+  // ***** ITransaction implementation methods *****
   
   public SciiRequest buildMainRequest()
   {
-      
+  
     SciiRequest request = null;
     
-    // *** Get Quotation object ***
-    Quotation quotation = this.getquotation(); 
+    // *** Get Order object ***
+    Order order = this.getorder(); 
 
-    // *** Add Quotation Header insert string ***
-    if (quotation.getstatus() == Quotation.STATUS_PENDING
-        || quotation.getstatus() == Quotation.STATUS_FAILED)
+    // *** Add Order Header insert string ***
+    if (order.getstatus() == Order.STATUS_PENDING
+        || order.getstatus() == Order.STATUS_FAILED)
     {
-      System.out.println("  Quotation " + quotation.getoid() + " request created.");
+      System.out.println("  Order " + order.getoid() + " request created.");
 
       request = new SciiRequest();
       request.setUrlExtension("ws/dal/Order");
-      request.setStrRequest(buildPostQuotationRequest(quotation));
+      request.setStrRequest(buildPostOrderRequest(order));
       request.setHttpMethod(HttpMethod.POST);
       request.setWhereClause("");
     }
@@ -102,20 +111,21 @@ public class TransactionQuotation extends Transaction implements Serializable
     
     ArrayList<SciiRequest> requests = new ArrayList<SciiRequest>();
 
-    // *** Add Quotation Lines insert strings ***
-    List<QuotationLine> quotationsLines = quotation.getquotationLine();
-    for (int i = 0; i < quotationsLines.size(); i++)
+    // *** Add Order Lines insert strings ***
+    List<OrderLine> orderLines = order.getorderLine();
+    for (int i = 0; i < orderLines.size(); i++)
     {
-      if (quotationsLines.get(i).getstatus() == Quotation.STATUS_PENDING
-          || quotationsLines.get(i).getstatus() == Quotation.STATUS_FAILED)
+      if (orderLines.get(i).getstatus() == Order.STATUS_PENDING
+          || orderLines.get(i).getstatus() == Order.STATUS_FAILED)
       {
-        QuotationLine line = quotationsLines.get(i);
-        System.out.println("    Quotation line: "
+        OrderLine line = orderLines.get(i);
+        System.out.println("    Order line: "
             + line.getlineNumber() + " request created.");
                
         SciiRequest request = new SciiRequest();
+        request.setTag("Order Line");
         request.setUrlExtension("ws/dal/OrderLine");
-        request.setStrRequest(buildPostQuotationLineRequest(line));
+        request.setStrRequest(buildPostOrderLineRequest(line));
         request.setHttpMethod(HttpMethod.POST);
         request.setWhereClause("");
         
@@ -125,7 +135,7 @@ public class TransactionQuotation extends Transaction implements Serializable
 
     return requests;
   }
-  
+
   public void processMainResponse(SciiResponse response)
   {
     
@@ -136,48 +146,48 @@ public class TransactionQuotation extends Transaction implements Serializable
       Node xmlDoc = responseEntity.getBody().getNode();
       String id = (String) XmlHelper.readFromXml(xmlDoc,
           "//inserted//Order/@id", XPathConstants.STRING);
-      this.getquotation().setserverId(id);
-      this.getquotation().setstatus(Quotation.STATUS_DRAFT);
-      System.out.println("  Quotation Id = " + id + " processed.");
+      this.getorder().setserverId(id);
+      this.getorder().setstatus(Order.STATUS_DRAFT);
+      System.out.println("  Order Id = " + id + " processed.");
     }
     else
     {
-      this.getquotation().setstatus(Quotation.STATUS_FAILED);
+      this.getorder().setstatus(Order.STATUS_FAILED);
     }
     
   }
 
   public void processSubResponse(SciiResponse response)
   {
-
+    
     if (response.getException() == null)
     {
       
-      QuotationLine line = this.getquotation().getquotationLine().get(response.getIndex());
+      OrderLine line = this.getorder().getorderLine().get(response.getIndex());
 
-      if (line.getstatus() != Quotation.STATUS_COMPLETE)
+      if (line.getstatus() != Order.STATUS_DRAFT)
       {
         ResponseEntity<DOMSource> responseEntity = response.getResponseEntity();
         Node xmlDoc = responseEntity.getBody().getNode();
         String id = (String) XmlHelper.readFromXml(xmlDoc,
             "//inserted//OrderLine/@id", XPathConstants.STRING);
         
-        line.setstatus(Quotation.STATUS_COMPLETE);
+        line.setstatus(Order.STATUS_DRAFT);
         
-        System.out.println("    QuotationLine Id = " + id + " processed.");
+        System.out.println("    OrderLine Id = " + id + " processed.");
       }
     }
     else
     {
-      this.getquotation().setstatus(Quotation.STATUS_FAILED);
+      this.getorder().setstatus(Order.STATUS_FAILED);
     }
 
   }
 
-
-  // ***** Private Methods *****
   
-  private String buildPostQuotationRequest(Quotation quotation)
+  // ***** Helper methods *****
+    
+  private String buildPostOrderRequest(Order order)
   {
 
     StringWriter sw = new StringWriter();
@@ -186,8 +196,8 @@ public class TransactionQuotation extends Transaction implements Serializable
     sw.write("<ob:Openbravo xmlns:ob=\"http://www.openbravo.com\">");
 
     sw.write("<Order>");
-    sw.write("<client id=\"" + quotation.getclientId() + "\"/>");
-    sw.write("<organization id=\"" + quotation.getorganizationId() + "\"/>");
+    sw.write("<client id=\"" + order.getclientId() + "\"/>");
+    sw.write("<organization id=\"" + order.getorganizationId() + "\"/>");
     sw.write("<active>true</active>");
     sw.write("<salesTransaction>true</salesTransaction>");
     // sw.write("<documentNo>" + _order.DocumentNo + "</documentNo>");
@@ -199,29 +209,26 @@ public class TransactionQuotation extends Transaction implements Serializable
     sw.write("<processed>false</processed>");
     sw.write("<posted>N</posted>");
     sw.write("<documentType id=\"0\"/>"); // ** New Document **
-    sw.write("<transactionDocument id=\"0A1D4A2DB7144D81A821E31A9B332ACB\"/>"); // **
-                                                                                // Quotation
+    sw.write("<transactionDocument id=\"CB6EEA256BBC41109911215C5A14D39B\"/>"); // **
+                                                                                // Standard
+                                                                                // Order
                                                                                 // //
                                                                                 // **
     sw.write("<print>N</print>");
-    sw.write("<orderDate>" + quotation.getcreationDate() + "</orderDate>");
-    sw.write("<accountingDate>" + quotation.getcreationDate()
-        + "</accountingDate>");
-    sw.write("<businessPartner id=\"" + quotation.getcustomerId() + "\"/>");
-    sw.write("<partnerAddress id=\"" + quotation.getcustomerAddressId()
-        + "\"/>");
+    sw.write("<orderDate>" + order.getcreationDate() + "</orderDate>");
+    sw.write("<accountingDate>" + order.getcreationDate() + "</accountingDate>");
+    sw.write("<businessPartner id=\"" + order.getcustomerId() + "\"/>");
+    sw.write("<partnerAddress id=\"" + order.getcustomerAddressId() + "\"/>");
     sw.write("<printDiscount>false</printDiscount>");
     sw.write("<currency id=\"100\"/>");
     sw.write("<formOfPayment>5</formOfPayment>");
-    sw.write("<paymentMethod id=\""
-        + quotation.getpaymentMethod().getserverId() + "\"/>");
-    sw.write("<paymentTerms id=\"" + quotation.getpaymentTermsId() + "\"/>");
-    sw.write("<priceList id=\"" + quotation.getpriceListId() + "\"/>");
+    sw.write("<paymentMethod id=\"" + order.getpaymentMethod().getserverId()
+        + "\"/>");
+    sw.write("<paymentTerms id=\"" + order.getpaymentTermsId() + "\"/>");
+    sw.write("<priceList id=\"" + order.getpriceListId() + "\"/>");
     sw.write("<chargeAmount>0</chargeAmount>");
-    sw.write("<summedLineAmount>" + quotation.getsubTotal()
-        + "</summedLineAmount>");
-    sw.write("<grandTotalAmount>" + quotation.gettotal()
-        + "</grandTotalAmount>");
+    sw.write("<summedLineAmount>" + order.getsubTotal() + "</summedLineAmount>");
+    sw.write("<grandTotalAmount>" + order.gettotal() + "</grandTotalAmount>");
     sw.write("<warehouse id=\"" + this.getwarehouseId() + "\"/>");
 
     sw.write("</Order>");
@@ -231,7 +238,7 @@ public class TransactionQuotation extends Transaction implements Serializable
     return sw.toString();
   }
 
-  private String buildPostQuotationLineRequest(QuotationLine quotationLine)
+  private String buildPostOrderLineRequest(OrderLine orderLine)
   {
 
     StringWriter sw = new StringWriter();
@@ -241,29 +248,25 @@ public class TransactionQuotation extends Transaction implements Serializable
 
     sw.write("<OrderLine>");
 
-    sw.write("<client id=\"" + quotationLine.getQuotation().getclientId()
+    sw.write("<client id=\"" + orderLine.getOrder().getclientId() + "\"/>");
+    sw.write("<organization id=\"" + orderLine.getOrder().getorganizationId()
         + "\"/>");
-    sw.write("<organization id=\""
-        + quotationLine.getQuotation().getorganizationId() + "\"/>");
     sw.write("<active>true</active>");
-    sw.write("<salesOrder id=\"" + quotationLine.getQuotation().getserverId()
-        + "\"/>");
-    sw.write("<lineNo>" + quotationLine.getlineNumber() + "</lineNo>");
-    sw.write("<product id=\"" + quotationLine.getproductId() + "\"/>");
-    sw.write("<orderedQuantity>" + quotationLine.getquantity()
+    sw.write("<salesOrder id=\"" + orderLine.getOrder().getserverId() + "\"/>");
+    sw.write("<lineNo>" + orderLine.getlineNumber() + "</lineNo>");
+    sw.write("<product id=\"" + orderLine.getproductId() + "\"/>");
+    sw.write("<orderedQuantity>" + orderLine.getquantity()
         + "</orderedQuantity>");
-    sw.write("<listPrice>" + quotationLine.getprice() + "</listPrice>");
-    sw.write("<unitPrice>" + quotationLine.getprice() + "</unitPrice>");
-    sw.write("<priceLimit>" + quotationLine.getprice() + "</priceLimit>");
-    sw.write("<lineNetAmount>" + quotationLine.getnetAmount()
-        + "</lineNetAmount>");
+    sw.write("<listPrice>" + orderLine.getprice() + "</listPrice>");
+    sw.write("<unitPrice>" + orderLine.getprice() + "</unitPrice>");
+    sw.write("<priceLimit>" + orderLine.getprice() + "</priceLimit>");
+    sw.write("<lineNetAmount>" + orderLine.getnetAmount() + "</lineNetAmount>");
     sw.write("<uOM id=\"100\"/>");
-    sw.write("<tax id=\"" + quotationLine.gettaxRateId() + "\"/>");
+    sw.write("<tax id=\"" + orderLine.gettaxRateId() + "\"/>");
     sw.write("<descriptionOnly>false</descriptionOnly>");
-    sw.write("<standardPrice>" + quotationLine.getprice() + "</standardPrice>");
+    sw.write("<standardPrice>" + orderLine.getprice() + "</standardPrice>");
     sw.write("<editLineAmount>false</editLineAmount>");
-    sw.write("<orderDate>" + quotationLine.getQuotation().getcreationDate()
-        + "</orderDate>");
+    sw.write("<orderDate>" + orderLine.getOrder().getcreationDate() + "</orderDate>");
     sw.write("<warehouse id=\"" + this.getwarehouseId() + "\"/>");
     sw.write("<currency id=\"100\"/>");
 
@@ -279,5 +282,5 @@ public class TransactionQuotation extends Transaction implements Serializable
     super.validate();
     System.out.println("END - Transaction Validation.");
   }
- 
+  
 }

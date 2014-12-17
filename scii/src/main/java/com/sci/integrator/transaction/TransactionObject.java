@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.sci.integrator.domain.core;
+package com.sci.integrator.transaction;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

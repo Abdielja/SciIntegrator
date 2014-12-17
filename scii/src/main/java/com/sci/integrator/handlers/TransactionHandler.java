@@ -17,11 +17,11 @@ import org.springframework.web.client.HttpServerErrorException;
 import com.sci.integrator.domain.core.AppSettings;
 import com.sci.integrator.domain.core.SciiException;
 import com.sci.integrator.domain.core.SciiResult;
-import com.sci.integrator.domain.core.Transaction;
-import com.sci.integrator.domain.core.TransactionError;
-import com.sci.integrator.domain.core.Transactions;
 import com.sci.integrator.provider.IProvider;
 import com.sci.integrator.services.ITransactionService;
+import com.sci.integrator.transaction.Transaction;
+import com.sci.integrator.transaction.TransactionError;
+import com.sci.integrator.transaction.Transactions;
 
 /**
  * @author Abdiel Jaramillo Ojedis

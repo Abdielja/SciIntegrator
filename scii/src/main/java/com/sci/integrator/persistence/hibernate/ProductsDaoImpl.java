@@ -11,9 +11,9 @@ import org.slf4j.LoggerFactory;
 import com.sci.integrator.domain.core.Product;
 import com.sci.integrator.domain.core.Products;
 import com.sci.integrator.domain.core.SciiResult;
-import com.sci.integrator.domain.core.TransactionStatus;
 import com.sci.integrator.domain.core.UserData;
 import com.sci.integrator.persistence.IProductDao;
+import com.sci.integrator.transaction.TransactionStatus;
 
 public class ProductsDaoImpl implements IProductDao
 {

@@ -4,7 +4,7 @@
 package com.sci.integrator.provider;
 
 import com.sci.integrator.domain.core.SciiException;
-import com.sci.integrator.domain.core.Transaction;
+import com.sci.integrator.transaction.Transaction;
 
 /**
  * @author Abdiel

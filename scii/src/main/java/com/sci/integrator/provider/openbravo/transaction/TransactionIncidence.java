@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.sci.integrator.domain.incidence;
+package com.sci.integrator.provider.openbravo.transaction;
 
 import java.io.Serializable;
 import java.util.List;
@@ -20,7 +20,8 @@ import org.hibernate.annotations.CascadeType;
 import com.sci.integrator.domain.core.SciiException;
 import com.sci.integrator.domain.core.SciiRequest;
 import com.sci.integrator.domain.core.SciiResponse;
-import com.sci.integrator.domain.core.Transaction;
+import com.sci.integrator.domain.incidence.Incidence;
+import com.sci.integrator.transaction.Transaction;
 
 /**
  * @author Abdiel Jaramillo Ojedis

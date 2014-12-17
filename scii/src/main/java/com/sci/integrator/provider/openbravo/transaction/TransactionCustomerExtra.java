@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.sci.integrator.domain.customer;
+package com.sci.integrator.provider.openbravo.transaction;
 
 import java.util.Date;
 import java.util.List;
@@ -21,8 +21,9 @@ import org.springframework.http.HttpMethod;
 import com.sci.integrator.domain.core.SciiException;
 import com.sci.integrator.domain.core.SciiRequest;
 import com.sci.integrator.domain.core.SciiResponse;
-import com.sci.integrator.domain.core.Transaction;
 import com.sci.integrator.domain.core.User;
+import com.sci.integrator.domain.customer.CustomerExtra;
+import com.sci.integrator.transaction.Transaction;
 
 /**
  * @author Abdiel Jaramillo Ojedis

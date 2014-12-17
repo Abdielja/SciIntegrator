@@ -28,9 +28,10 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 import com.sci.integrator.domain.core.User;
-import com.sci.integrator.domain.invoice.TransactionInvoice;
 import com.sci.integrator.domain.order.OrderLine;
 import com.sci.integrator.domain.payment.PaymentMethod;
+import com.sci.integrator.provider.openbravo.transaction.TransactionInvoice;
+import com.sci.integrator.provider.openbravo.transaction.TransactionOrder;
 
 /**
  * @author Abdiel Jaramillo Ojedis

@@ -13,11 +13,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sci.integrator.domain.core.Routes;
-import com.sci.integrator.domain.core.Transaction;
-import com.sci.integrator.domain.core.Transactions;
 import com.sci.integrator.domain.core.User;
 import com.sci.integrator.domain.core.UserData;
 import com.sci.integrator.persistence.IUserDao;
+import com.sci.integrator.transaction.Transaction;
+import com.sci.integrator.transaction.Transactions;
 
 /**
  * @author Abdiel

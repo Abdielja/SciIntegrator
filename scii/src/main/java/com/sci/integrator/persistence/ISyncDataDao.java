@@ -5,7 +5,7 @@ package com.sci.integrator.persistence;
 
 import com.sci.integrator.domain.core.SciiResult;
 import com.sci.integrator.domain.core.SyncData;
-import com.sci.integrator.domain.core.Transaction;
+import com.sci.integrator.transaction.Transaction;
 
 /**
  * @author Abdiel Jaramillo Ojedis

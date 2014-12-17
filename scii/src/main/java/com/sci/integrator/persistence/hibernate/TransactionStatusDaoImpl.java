@@ -11,7 +11,7 @@ import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.sci.integrator.domain.core.TransactionStatus;
+import com.sci.integrator.transaction.TransactionStatus;
 
 /**
  * @author Abdiel Jarimillo Ojedis 

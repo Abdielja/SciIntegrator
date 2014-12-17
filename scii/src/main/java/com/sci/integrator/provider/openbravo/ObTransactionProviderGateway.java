@@ -26,23 +26,23 @@ import com.sci.integrator.domain.core.SciiException;
 import com.sci.integrator.domain.core.SciiRequest;
 import com.sci.integrator.domain.core.SciiResponse;
 import com.sci.integrator.domain.core.SciiResult;
-import com.sci.integrator.domain.core.Transaction;
 import com.sci.integrator.domain.core.TransactionOpen;
 import com.sci.integrator.domain.core.User;
 import com.sci.integrator.domain.invoice.Invoice;
 import com.sci.integrator.domain.order.Order;
 import com.sci.integrator.domain.order.Orders;
-import com.sci.integrator.domain.order.TransactionOrder;
 import com.sci.integrator.domain.payment.PaymentMethod;
 import com.sci.integrator.provider.ITransactionProviderGateway;
 import com.sci.integrator.provider.IUserProviderGateway;
 import com.sci.integrator.provider.RestBaseProviderGateway;
+import com.sci.integrator.provider.openbravo.transaction.TransactionOrder;
 import com.sci.integrator.services.IInvoiceService;
 import com.sci.integrator.services.IOrderService;
 import com.sci.integrator.services.IPaymentMethodService;
 import com.sci.integrator.services.ITransactionService;
 import com.sci.integrator.services.IUserService;
 import com.sci.integrator.services.relational.SciiLoggerService;
+import com.sci.integrator.transaction.Transaction;
 
 /**
  * @author Abdiel Jaramillo ojedis

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.sci.integrator.domain.core;
+package com.sci.integrator.transaction;
 
 import java.io.Serializable;
 

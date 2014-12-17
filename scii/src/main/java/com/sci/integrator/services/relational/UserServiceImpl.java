@@ -10,14 +10,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sci.integrator.domain.core.Invoices;
-import com.sci.integrator.domain.core.Transaction;
-import com.sci.integrator.domain.core.Transactions;
 import com.sci.integrator.domain.core.User;
 import com.sci.integrator.domain.core.UserData;
-import com.sci.integrator.domain.invoice.TransactionInvoice;
 import com.sci.integrator.persistence.IUserDao;
 import com.sci.integrator.provider.IProvider;
+import com.sci.integrator.provider.openbravo.transaction.TransactionInvoice;
 import com.sci.integrator.services.IUserService;
+import com.sci.integrator.transaction.Transaction;
+import com.sci.integrator.transaction.Transactions;
 
 
 /**

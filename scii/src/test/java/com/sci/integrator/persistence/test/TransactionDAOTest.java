@@ -7,8 +7,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import com.sci.integrator.domain.core.Transaction;
 import com.sci.integrator.persistence.ITransactionDAO;
+import com.sci.integrator.transaction.Transaction;
 
 /**
  * 

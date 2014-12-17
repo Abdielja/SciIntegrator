@@ -33,6 +33,7 @@ import com.sci.integrator.domain.invoice.Invoice;
 import com.sci.integrator.domain.invoice.InvoiceLine;
 import com.sci.integrator.domain.order.Orders;
 import com.sci.integrator.domain.payment.Payments;
+import com.sci.integrator.transaction.TransactionObject;
 
 /**
  * @author Abdiel Jaramillo Ojedis

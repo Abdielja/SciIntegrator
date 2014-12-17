@@ -38,6 +38,7 @@ import org.hibernate.annotations.Parameter;
 
 import com.sci.integrator.domain.core.User;
 import com.sci.integrator.domain.payment.PaymentMethod;
+import com.sci.integrator.provider.openbravo.transaction.TransactionInvoice;
 
 /**
  * @author Abdiel Jaramillo Ojedis

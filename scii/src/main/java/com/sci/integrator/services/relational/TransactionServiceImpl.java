@@ -15,23 +15,23 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sci.integrator.domain.core.SciiException;
 import com.sci.integrator.domain.core.SciiResult;
-import com.sci.integrator.domain.core.Transaction;
-import com.sci.integrator.domain.core.TransactionError;
 import com.sci.integrator.domain.core.TransactionOpen;
-import com.sci.integrator.domain.core.Transactions;
 import com.sci.integrator.domain.core.User;
 import com.sci.integrator.domain.core.UserData;
 import com.sci.integrator.domain.invoice.Invoice;
-import com.sci.integrator.domain.invoice.TransactionInvoice;
-import com.sci.integrator.domain.invoice.TransactionInvoiceReversal;
 import com.sci.integrator.domain.payment.Payment;
-import com.sci.integrator.domain.payment.TransactionPayment;
 import com.sci.integrator.persistence.ITransactionDAO;
 import com.sci.integrator.persistence.IUserDao;
 import com.sci.integrator.persistence.IUserDataDao;
 import com.sci.integrator.persistence.hibernate.UserDataDaoImpl;
+import com.sci.integrator.provider.openbravo.transaction.TransactionInvoice;
+import com.sci.integrator.provider.openbravo.transaction.TransactionInvoiceReversal;
+import com.sci.integrator.provider.openbravo.transaction.TransactionPayment;
 import com.sci.integrator.services.IInvoiceService;
 import com.sci.integrator.services.ITransactionService;
+import com.sci.integrator.transaction.Transaction;
+import com.sci.integrator.transaction.TransactionError;
+import com.sci.integrator.transaction.Transactions;
 
 /**
  * @author Abdiel Jaramillo Ojedis

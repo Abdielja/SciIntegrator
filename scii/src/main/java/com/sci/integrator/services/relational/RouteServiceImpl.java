@@ -5,10 +5,10 @@ import org.springframework.stereotype.Service;
 import com.sci.integrator.domain.core.Route;
 import com.sci.integrator.domain.core.Routes;
 import com.sci.integrator.domain.core.SciiResult;
-import com.sci.integrator.domain.core.Transaction;
-import com.sci.integrator.domain.core.Transactions;
 import com.sci.integrator.persistence.IRouteDao;
 import com.sci.integrator.services.IRouteService;
+import com.sci.integrator.transaction.Transaction;
+import com.sci.integrator.transaction.Transactions;
 
 @Service("routeService")
 public class RouteServiceImpl implements IRouteService

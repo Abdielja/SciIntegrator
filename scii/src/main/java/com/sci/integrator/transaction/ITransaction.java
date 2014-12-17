@@ -1,9 +1,14 @@
 /**
  * 
  */
-package com.sci.integrator.domain.core;
+package com.sci.integrator.transaction;
 
 import java.util.List;
+
+import com.sci.integrator.domain.core.SciiException;
+import com.sci.integrator.domain.core.SciiRequest;
+import com.sci.integrator.domain.core.SciiResponse;
+import com.sci.integrator.domain.core.SciiResult;
 
 /**
  * @author Abdiel Jaramillo Ojedis

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.sci.integrator.domain.invoice;
+package com.sci.integrator.provider.openbravo.transaction;
 
 import java.io.Serializable;
 import java.io.StringWriter;
@@ -39,10 +39,12 @@ import com.sci.integrator.domain.core.SciiException;
 import com.sci.integrator.domain.core.SciiRequest;
 import com.sci.integrator.domain.core.SciiResponse;
 import com.sci.integrator.domain.core.SciiResult;
-import com.sci.integrator.domain.core.Transaction;
+import com.sci.integrator.domain.invoice.Invoice;
+import com.sci.integrator.domain.invoice.InvoiceLine;
 import com.sci.integrator.domain.order.Order;
 import com.sci.integrator.domain.order.OrderLine;
 import com.sci.integrator.helpers.XmlHelper;
+import com.sci.integrator.transaction.Transaction;
 
 /**
  * @author Abdiel Jaramillo Ojedis

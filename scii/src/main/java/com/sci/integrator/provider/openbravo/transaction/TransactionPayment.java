@@ -7,7 +7,7 @@
  *
  */
 
-package com.sci.integrator.domain.payment;
+package com.sci.integrator.provider.openbravo.transaction;
 
 import java.io.Serializable;
 import java.util.List;
@@ -28,8 +28,9 @@ import com.sci.integrator.domain.core.SciiException;
 import com.sci.integrator.domain.core.SciiRequest;
 import com.sci.integrator.domain.core.SciiResponse;
 import com.sci.integrator.domain.core.SciiResult;
-import com.sci.integrator.domain.core.Transaction;
 import com.sci.integrator.domain.invoice.Invoice;
+import com.sci.integrator.domain.payment.Payment;
+import com.sci.integrator.transaction.Transaction;
 
 @Entity
 @XmlRootElement(name = "transactionPayment")

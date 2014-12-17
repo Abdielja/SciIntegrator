@@ -16,6 +16,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import com.sci.integrator.services.ITransactionService;
 import com.sci.integrator.services.IUserDataService;
 import com.sci.integrator.services.IUserService;
+import com.sci.integrator.transaction.Transaction;
 
 /**
  * @author Abdiel Jaramillo Ojedis

@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.sci.integrator.domain.core.Transactions;
 import com.sci.integrator.services.ITransactionService;
 import com.sci.integrator.services.relational.TransactionServiceImpl;
+import com.sci.integrator.transaction.Transactions;
 
 /**
  * @author Abdiel Jaramillo Ojedis

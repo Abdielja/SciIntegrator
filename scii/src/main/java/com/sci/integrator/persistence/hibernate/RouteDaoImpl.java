@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 import com.sci.integrator.domain.core.Route;
 import com.sci.integrator.domain.core.Routes;
 import com.sci.integrator.domain.core.SciiResult;
-import com.sci.integrator.domain.core.TransactionStatus;
 import com.sci.integrator.persistence.IRouteDao;
 import com.sci.integrator.persistence.IUserDao;
+import com.sci.integrator.transaction.TransactionStatus;
 
 public class RouteDaoImpl implements IRouteDao
 {

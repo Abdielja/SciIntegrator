@@ -8,10 +8,10 @@ import java.util.List;
 
 import com.sci.integrator.domain.core.SciiException;
 import com.sci.integrator.domain.core.SciiResult;
-import com.sci.integrator.domain.core.Transaction;
-import com.sci.integrator.domain.core.Transactions;
 import com.sci.integrator.domain.core.User;
-import com.sci.integrator.domain.invoice.TransactionInvoice;
+import com.sci.integrator.provider.openbravo.transaction.TransactionInvoice;
+import com.sci.integrator.transaction.Transaction;
+import com.sci.integrator.transaction.Transactions;
 
 /**
  * @author Abdiel Jaramillo Ojedes

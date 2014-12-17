@@ -12,13 +12,13 @@ import org.slf4j.LoggerFactory;
 
 import com.sci.integrator.domain.core.Route;
 import com.sci.integrator.domain.core.SciiResult;
-import com.sci.integrator.domain.core.TransactionStatus;
 import com.sci.integrator.domain.customer.Customer;
 import com.sci.integrator.domain.customer.Customers;
 import com.sci.integrator.domain.quotation.Quotation;
 import com.sci.integrator.domain.quotation.QuotationLine;
-import com.sci.integrator.domain.quotation.TransactionQuotation;
 import com.sci.integrator.persistence.ICustomersDao;
+import com.sci.integrator.provider.openbravo.transaction.TransactionQuotation;
+import com.sci.integrator.transaction.TransactionStatus;
 
 /**
  * @author Abdiel

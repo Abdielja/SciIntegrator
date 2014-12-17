@@ -16,9 +16,9 @@ import com.sci.integrator.domain.core.Invoices;
 import com.sci.integrator.domain.core.Product;
 import com.sci.integrator.domain.core.Route;
 import com.sci.integrator.domain.core.SciiResult;
-import com.sci.integrator.domain.core.Transaction;
 import com.sci.integrator.domain.invoice.Invoice;
 import com.sci.integrator.persistence.IInvoiceDao;
+import com.sci.integrator.transaction.Transaction;
 
 /**
  * @author Abdiel Jaramillo Ojedis
