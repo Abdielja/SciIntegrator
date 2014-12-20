@@ -67,7 +67,7 @@
 	    </figure>
 	    <hgroup>
 	      <h1>Spirit System Integrator</h1>
-	      <h2>Version 3.0</h2>
+	      <h2>Version 3.3</h2>
         <h3>(DND)</h3>
 	    </hgroup>
 	  </header>

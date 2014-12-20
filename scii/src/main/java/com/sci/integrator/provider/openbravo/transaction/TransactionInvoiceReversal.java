@@ -73,8 +73,13 @@ public class TransactionInvoiceReversal extends Transaction
     }
     else 
     {
+      /* ***** Se quito esto porque estaba dando problemas frequentes. VERIFICAR BIEN !!!!! *****
+       * 
       sr.setreturnCode(Transaction.STATUS_INVOICE_PENDING);
       sr.setreturnMessage("Invoice " + invoice.getoid() + " can not be reversed because it has not been processed yet.");
+      */
+      sr.setreturnMessage("WARNING: Invoice Reversal" + invoice.getoid() + ". Has not been processed yet.");
+      sr.setreturnCode(Transaction.STATUS_VALIDATED);
       return sr;
     }
 

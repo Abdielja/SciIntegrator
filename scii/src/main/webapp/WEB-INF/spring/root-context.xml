@@ -21,13 +21,13 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
 	<!-- Activates various annotations to be detected in bean classes -->
-	 <context:annotation-config/> 
+	<context:annotation-config/> 
 	
 	<!-- Load configuration properties files -->
-	<context:property-placeholder
-	location="/config/scii.properties,
-	          /config/persistence.properties"
-	ignore-unresolvable="true"/>	
+	<context:property-placeholder 
+		location="/config/scii.properties, /config/persistence.properties" 
+		ignore-unresolvable="true"
+	/>	
 
   <!-- ***** BEGIN: SCII Application Settings Bean ***** -->
 
@@ -40,12 +40,8 @@
   <!-- ***** END: SCII Application Settings Bean ***** -->
 
 
-	<!-- ***** BEGIN: Common Persistence Beans ***** -->
+  <!-- ***** BEGIN: Common Persistence Beans ***** -->
 	 
-	 <!-- Load persistence properties from file
-  <context:property-placeholder location="/config/persistence.properties" />
-   -->
-   
 	<!-- DataSource -->
 	<bean class="org.apache.commons.dbcp.BasicDataSource" id="dataSource" destroy-method="close">
 	
@@ -64,7 +60,7 @@
 <!-- ***** END: Common Persisntece Beans ***** -->
 
  
-<!-- ***** BEGIN: Hibernate Persistence Layer Definitition (transfer this to a xml file and use import in order to facilitate DB provider switching) ***** -->
+<!-- ***** BEGIN: Hibernate Persistence Layer Definitition (move this to a xml file and use import in order to facilitate DB provider switching) ***** -->
  
 <!-- Hibernate Session Factory -->
 <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"> 
@@ -234,9 +230,9 @@
         <value>com.sci.integrator.domain.core.Role</value>
         <value>com.sci.integrator.domain.core.Routes</value>
         <value>com.sci.integrator.domain.core.Route</value>
-	      <value>com.sci.integrator.domain.customer.Customer</value>
+	    <value>com.sci.integrator.domain.customer.Customer</value>
         <value>com.sci.integrator.domain.customer.CustomerExtra</value>
-	      <value>com.sci.integrator.domain.customer.Customers</value>
+	    <value>com.sci.integrator.domain.customer.Customers</value>
         <value>com.sci.integrator.domain.core.Products</value>
         <value>com.sci.integrator.domain.core.Product</value>
         <value>com.sci.integrator.domain.core.ProductPrices</value>
@@ -327,7 +323,7 @@
      <property name="paymentDao" ref="paymentDao" />
    </bean>
   
-	 <bean id="transactionService" class="com.sci.integrator.services.relational.TransactionServiceImpl">
+	<bean id="transactionService" class="com.sci.integrator.services.relational.TransactionServiceImpl">
 	   <property name="transactionDao" ref="transactionDao" />
      <property name="userDao" ref="userDao" />
 	 </bean>
