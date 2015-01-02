@@ -41,7 +41,7 @@ import com.sci.integrator.provider.IUserProviderGateway;
 import com.sci.integrator.provider.RestBaseProviderGateway;
 
 /**
- * @author Abdiel
+ * @author Abdiel Jaramillo O.
  *
  */
 public class ObUserProviderGateway extends RestBaseProviderGateway implements IUserProviderGateway

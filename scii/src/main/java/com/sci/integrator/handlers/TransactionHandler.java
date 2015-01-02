@@ -18,6 +18,7 @@ import com.sci.integrator.domain.core.AppSettings;
 import com.sci.integrator.domain.core.SciiException;
 import com.sci.integrator.domain.core.SciiResult;
 import com.sci.integrator.provider.IProvider;
+import com.sci.integrator.provider.ProviderFactory;
 import com.sci.integrator.services.ITransactionService;
 import com.sci.integrator.transaction.Transaction;
 import com.sci.integrator.transaction.TransactionError;
@@ -40,8 +41,11 @@ public class TransactionHandler
   ITransactionService transactionService;
 
   @Inject
+  ProviderFactory providerFactory;
+  
+  //@Inject
   IProvider           provider;
-
+  
   public void process()
   {
 
@@ -83,6 +87,7 @@ public class TransactionHandler
 
           try
           {
+            provider = providerFactory.getProvider(trx);
             provider.getTransactionProviderGateway().processTransaction(trx);
             trx.setstatus(Transaction.STATUS_PROCESSED);
             
@@ -158,6 +163,7 @@ public class TransactionHandler
 
       try
       {
+        provider = providerFactory.getProvider(trx);
         Transaction retTrx = provider.getTransactionProviderGateway().processTransaction(trx);
 
         trx.setstatus(Transaction.STATUS_PROCESSED);

@@ -32,7 +32,7 @@ public class SyncProcessHandler
   @Inject
   ISyncDataService syncDataService;
 
-  @Inject
+  //@Inject
   IProvider           providerGateway;
 
   

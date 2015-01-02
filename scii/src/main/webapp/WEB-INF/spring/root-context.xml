@@ -365,9 +365,17 @@
 
  <!-- END: Definitions of Application Events Handlers -->
 
+<!-- BEGIN: Definitions of Provider Factory -->
 
- <!-- BEGIN: Definitions of Providers Services -->
+    <bean id="ProviderFactory" class="com.sci.integrator.provider.ProviderFactory">
+    </bean>
 
+<!-- END: Definitions of Provider Factory -->
+
+
+
+ <!-- BEGIN: Definitions of Providers Services  ****** Changed to use ProviderFactory pattern instead. Abdiel - January 2, 2015. *****
+ 
     <bean id="obUserProviderGateway" class="com.sci.integrator.provider.openbravo.ObUserProviderGateway">
       <constructor-arg value="${remote.server.url}"/>
     </bean>
@@ -386,7 +394,10 @@
      <property name="userProviderGateway" ref="obUserProviderGateway" />
      <property name="transactionProviderGateway" ref="obTransactionProviderGateway" />
    </bean>
+ -->
 
+
+ 
 <!-- END: Definitions of Providers Services Implementations to be used in SCII services -->
   
 

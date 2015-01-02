@@ -1,3 +1,4 @@
+
 /**
  * 
  */
@@ -55,7 +56,7 @@ public class ObTransactionProviderGateway extends RestBaseProviderGateway
 
   // ***** Other ProviderGateways Required  *****
   
-  @Inject
+  //@Inject
   IUserProviderGateway        userProviderGateway;
 
   // ***** Persistence Services *****
