@@ -133,6 +133,9 @@ public class TransactionRestController
     {
       trx = processSynchronous(trx);
 
+      result.setreturnCode((SciiResult.RETURN_CODE_OK));
+      result.setreturnMessage("OK");
+
       // *** TransactionOpen. Return UserData ***      
       if (trx.getClass() == TransactionOpen.class)
       {
@@ -142,16 +145,21 @@ public class TransactionRestController
         StringWriter sw = new StringWriter();
         StreamResult xmlResult = new StreamResult(sw);
         
-        marshaller.marshal(ud, xmlResult);
+        try
+        {
+          marshaller.marshal(ud, xmlResult);          
+          String strXmlTrxObject = sw.toString();
+          result.setTransactionObject(strXmlTrxObject);
+        }  
+        catch(Exception e)
+        {
+          System.out.println("TransactionRestController - Processed transaction returned illegal data.");
+          result.setreturnCode((SciiResult.RETURN_CODE_INVALID_DATA_RETURNED));
+          result.setreturnMessage("TransactionRestController - Processed transaction returned illegal data. " + e.getMessage());
+        }
         
-        String strXmlTrxObject = sw.toString();
-        result.setTransactionObject(strXmlTrxObject);
-
       }
       
-      result.setreturnCode((SciiResult.RETURN_CODE_OK));
-      result.setreturnMessage("OK");
-
     }
     
     return result;

@@ -53,9 +53,10 @@ public class AdempiereTransactionProviderGateway extends SOAPBaseProviderGateway
 
 
   @Override
-	public Transaction processTransaction(Transaction trx) throws SciiException {
-		// TODO Auto-generated method stub
-		return null;
+	public Transaction processTransaction(Transaction trx) throws SciiException 
+  {
+	
+		return trx;
 	}
 
 }

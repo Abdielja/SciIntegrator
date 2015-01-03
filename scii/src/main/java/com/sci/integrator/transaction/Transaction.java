@@ -348,7 +348,13 @@ public abstract class Transaction implements ITransaction, Serializable
     SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 
     String strCreationDate = sdf.format(this.getcreationDate());
-    String strLastBalanceDate = sdf.format(this.getcreatedBy().getLastBalanceDate());
+    Date lbDate = this.getcreatedBy().getLastBalanceDate();
+    if (lbDate == null)
+    {
+      lbDate = new Date();
+    }
+    
+    String strLastBalanceDate = sdf.format(lbDate);
 
     if (strCreationDate.compareTo(strLastBalanceDate) < 0)
     {
