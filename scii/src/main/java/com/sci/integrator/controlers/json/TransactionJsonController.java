@@ -24,13 +24,14 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 
 
+
 import com.sci.integrator.domain.core.SciiException;
 import com.sci.integrator.domain.core.SciiResult;
-import com.sci.integrator.domain.core.TransactionOpen;
 import com.sci.integrator.domain.core.User;
 import com.sci.integrator.domain.core.UserData;
 import com.sci.integrator.handlers.TransactionHandler;
 import com.sci.integrator.helpers.XmlHelper;
+import com.sci.integrator.provider.openbravo.transaction.TransactionOpen;
 import com.sci.integrator.services.ILoggerService;
 import com.sci.integrator.services.ITransactionService;
 import com.sci.integrator.services.relational.SciiLoggerService;

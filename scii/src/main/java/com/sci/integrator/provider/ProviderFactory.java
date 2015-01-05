@@ -16,6 +16,13 @@ public class ProviderFactory
 
   @Inject
   AppSettings appSettings;
+
+  @Inject
+  ObProvider obProvider;
+  
+  @Inject
+  AdempiereProvider adempiereProvider;
+
   
   public IProvider getProvider(Transaction trx) throws SciiException
   {
@@ -24,25 +31,12 @@ public class ProviderFactory
     
     if (providerOid == 1)
     {
-      provider = new ObProvider();
- 
-      ObTransactionProviderGateway trxProviderGateway = new ObTransactionProviderGateway(appSettings.getServerUrl());
-      ObUserProviderGateway userProviderGateway = new ObUserProviderGateway(appSettings.getServerUrl());
-      
-      provider.setTransactionProviderGateway(trxProviderGateway);
-      provider.setUserProviderGateway(userProviderGateway);
-      provider.setSyncProcess(null);
-    }
+      provider = obProvider;
+     }
     
     if (providerOid == 2)
     {
-      provider = new AdempiereProvider();
-
-      AdempiereTransactionProviderGateway providerGateway = new AdempiereTransactionProviderGateway("");
-      
-      provider.setTransactionProviderGateway(providerGateway);
-      provider.setUserProviderGateway(null);
-      provider.setSyncProcess(null);
+      provider = adempiereProvider;
     }
     
     if (provider == null)

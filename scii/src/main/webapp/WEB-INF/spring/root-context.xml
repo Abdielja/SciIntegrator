@@ -69,6 +69,8 @@
   <property name="annotatedClasses"> 
     <list> 
 
+	  <!-- Common domain classes -->	
+
       <value>com.sci.integrator.domain.core.SyncData</value>
       <value>com.sci.integrator.domain.core.UserData</value>
       <value>com.sci.integrator.domain.core.UserPeriodData</value>
@@ -96,37 +98,45 @@
 
       <value>com.sci.integrator.domain.core.Provider</value>
 
-      <value>com.sci.integrator.transaction.Transaction</value> 
-      <value>com.sci.integrator.transaction.TransactionError</value> 
-      <value>com.sci.integrator.transaction.TransactionStatus</value> 
-      <value>com.sci.integrator.domain.core.TransactionOpen</value> 
-
-      <value>com.sci.integrator.provider.openbravo.transaction.TransactionQuotation</value>
       <value>com.sci.integrator.domain.quotation.Quotation</value>
       <value>com.sci.integrator.domain.quotation.QuotationLine</value>
 
-      <value>com.sci.integrator.provider.openbravo.transaction.TransactionOrder</value>
       <value>com.sci.integrator.domain.order.Order</value>
       <value>com.sci.integrator.domain.order.OrderLine</value>
 
-      <value>com.sci.integrator.provider.openbravo.transaction.TransactionInvoice</value>
       <value>com.sci.integrator.domain.invoice.Invoice</value>
       <value>com.sci.integrator.domain.invoice.InvoiceLine</value>
-      <value>com.sci.integrator.provider.openbravo.transaction.TransactionInvoiceReversal</value>
 
-      <value>com.sci.integrator.provider.openbravo.transaction.TransactionPayment</value>
       <value>com.sci.integrator.domain.payment.Payment</value>
       <value>com.sci.integrator.domain.payment.PaymentMethod</value>
       <value>com.sci.integrator.domain.payment.Payments</value>
 
-      <value>com.sci.integrator.provider.openbravo.transaction.TransactionIncidence</value>
       <value>com.sci.integrator.domain.incidence.Incidence</value>
       <value>com.sci.integrator.domain.incidence.IncidenceType</value>
 
-      <value>com.sci.integrator.provider.openbravo.transaction.TransactionCustomerExtra</value>
       <value>com.sci.integrator.domain.customer.Customer</value>
       <value>com.sci.integrator.domain.customer.CustomerExtra</value>
 
+
+	  <!-- Common Transactions Classes -->
+      <value>com.sci.integrator.transaction.Transaction</value> 
+      <value>com.sci.integrator.transaction.TransactionError</value> 
+      <value>com.sci.integrator.transaction.TransactionStatus</value> 
+
+	  <!-- Openbravo Transactions Classes -->
+      <value>com.sci.integrator.provider.openbravo.transaction.TransactionOpen</value> 
+      <value>com.sci.integrator.provider.openbravo.transaction.TransactionQuotation</value>
+      <value>com.sci.integrator.provider.openbravo.transaction.TransactionOrder</value>
+      <value>com.sci.integrator.provider.openbravo.transaction.TransactionInvoice</value>
+      <value>com.sci.integrator.provider.openbravo.transaction.TransactionInvoiceReversal</value>
+      <value>com.sci.integrator.provider.openbravo.transaction.TransactionPayment</value>
+      <value>com.sci.integrator.provider.openbravo.transaction.TransactionIncidence</value>
+      <value>com.sci.integrator.provider.openbravo.transaction.TransactionCustomerExtra</value>
+
+	  <!-- Adempiere Transactions Classes -->
+      <value>com.sci.integrator.provider.adempiere.transaction.TransactionOpenAdempiere</value> 
+	  
+	   	
     </list> 
   </property> 
 
@@ -211,72 +221,77 @@
 
   <bean id="marshaller" class="org.springframework.oxm.jaxb.Jaxb2Marshaller"> 
 
-	  <property name="classesToBeBound"> 
-	    <list>
+	<property name="classesToBeBound"> 
+	  <list>
 	    
-        <value>com.sci.integrator.domain.core.SyncData</value>
-        <value>com.sci.integrator.domain.core.UserData</value>
+	  	<!-- Common domain classes -->	
+
+	      <value>com.sci.integrator.domain.core.SyncData</value>
+	      <value>com.sci.integrator.domain.core.UserData</value>
+		      
+	      <value>com.sci.integrator.domain.core.Users</value>
+	      <value>com.sci.integrator.domain.core.User</value>
+	      <value>com.sci.integrator.domain.core.Roles</value>
+	      <value>com.sci.integrator.domain.core.Role</value>
+	      <value>com.sci.integrator.domain.core.Routes</value>
+	      <value>com.sci.integrator.domain.core.Route</value>
+	   	  <value>com.sci.integrator.domain.customer.Customer</value>
+	      <value>com.sci.integrator.domain.customer.CustomerExtra</value>
+	   	  <value>com.sci.integrator.domain.customer.Customers</value>
+	      <value>com.sci.integrator.domain.core.Products</value>
+	      <value>com.sci.integrator.domain.core.Product</value>
+	      <value>com.sci.integrator.domain.core.ProductPrices</value>
+	      <value>com.sci.integrator.domain.core.ProductPrice</value>
+	      <value>com.sci.integrator.domain.core.Invoices</value>
+	
+	      <value>com.sci.integrator.domain.core.LogEntry</value>
 	      
-        <value>com.sci.integrator.transaction.Transactions</value>
-        <value>com.sci.integrator.transaction.Transaction</value>
-        <value>com.sci.integrator.transaction.TransactionError</value> 
-        <value>com.sci.integrator.transaction.TransactionStatus</value> 
-        <value>com.sci.integrator.domain.core.TransactionOpen</value> 
-
-
-        <value>com.sci.integrator.domain.core.Users</value>
-        <value>com.sci.integrator.domain.core.User</value>
-        <value>com.sci.integrator.domain.core.Roles</value>
-        <value>com.sci.integrator.domain.core.Role</value>
-        <value>com.sci.integrator.domain.core.Routes</value>
-        <value>com.sci.integrator.domain.core.Route</value>
-	    <value>com.sci.integrator.domain.customer.Customer</value>
-        <value>com.sci.integrator.domain.customer.CustomerExtra</value>
-	    <value>com.sci.integrator.domain.customer.Customers</value>
-        <value>com.sci.integrator.domain.core.Products</value>
-        <value>com.sci.integrator.domain.core.Product</value>
-        <value>com.sci.integrator.domain.core.ProductPrices</value>
-        <value>com.sci.integrator.domain.core.ProductPrice</value>
-        <value>com.sci.integrator.domain.core.Invoices</value>
-
-        <value>com.sci.integrator.domain.core.LogEntry</value>
-        
-        <value>com.sci.integrator.domain.core.Provider</value>
-        <value>com.sci.integrator.domain.core.SciiResult</value>
-
+	      <value>com.sci.integrator.domain.core.Provider</value>
+	      <value>com.sci.integrator.domain.core.SciiResult</value>
+	
 	      <value>com.sci.integrator.domain.quotation.Quotation</value>
 	      <value>com.sci.integrator.domain.quotation.QuotationLine</value>
-        <value>com.sci.integrator.provider.openbravo.transaction.TransactionQuotation</value>
-
+	
 	      <value>com.sci.integrator.domain.order.Order</value>
 	      <value>com.sci.integrator.domain.order.OrderLine</value>
-        <value>com.sci.integrator.domain.order.Orders</value>
-	      <value>com.sci.integrator.provider.openbravo.transaction.TransactionOrder</value>
-
-        <value>com.sci.integrator.domain.invoice.Invoice</value>
-        <value>com.sci.integrator.domain.invoice.InvoiceLine</value>
-        <value>com.sci.integrator.provider.openbravo.transaction.TransactionInvoice</value>
-        <value>com.sci.integrator.provider.openbravo.transaction.TransactionInvoiceReversal</value>
-
-        <value>com.sci.integrator.provider.openbravo.transaction.TransactionPayment</value>
-        <value>com.sci.integrator.domain.payment.Payment</value>
-        <value>com.sci.integrator.domain.payment.PaymentMethod</value>
-        <value>com.sci.integrator.domain.payment.Payments</value>
-
-	      <value>com.sci.integrator.provider.openbravo.transaction.TransactionIncidence</value>
+	      <value>com.sci.integrator.domain.order.Orders</value>
+	
+	      <value>com.sci.integrator.domain.invoice.Invoice</value>
+	      <value>com.sci.integrator.domain.invoice.InvoiceLine</value>
+	
+	      <value>com.sci.integrator.domain.payment.Payment</value>
+	      <value>com.sci.integrator.domain.payment.PaymentMethod</value>
+	      <value>com.sci.integrator.domain.payment.Payments</value>
+	
 	      <value>com.sci.integrator.domain.incidence.Incidence</value>
 	      <value>com.sci.integrator.domain.incidence.IncidenceType</value>
-
-	      <value>com.sci.integrator.provider.openbravo.transaction.TransactionCustomerExtra</value>
+	
 	      <value>com.sci.integrator.domain.customer.Customer</value>
 	      <value>com.sci.integrator.domain.customer.CustomerExtra</value>
-
-        <!-- ***** BEGIN: JAXB DTOs declaration ***** -->
-        
-        <value>com.sci.integrator.controlers.dto.UserDto</value>
-        <value>com.sci.integrator.controlers.dto.UserDtoList</value>
-
-        <!-- ***** END: JAXB DTOs declaration ***** -->
+	
+		  <!-- Common Transactions Classes -->
+	      <value>com.sci.integrator.transaction.Transactions</value>
+	      <value>com.sci.integrator.transaction.Transaction</value>
+	      <value>com.sci.integrator.transaction.TransactionError</value> 
+	      <value>com.sci.integrator.transaction.TransactionStatus</value> 
+	
+		  <!-- Openbravo Transactions Classes -->
+	      <value>com.sci.integrator.provider.openbravo.transaction.TransactionOpen</value> 
+	      <value>com.sci.integrator.provider.openbravo.transaction.TransactionQuotation</value>
+	      <value>com.sci.integrator.provider.openbravo.transaction.TransactionOrder</value>
+	      <value>com.sci.integrator.provider.openbravo.transaction.TransactionInvoice</value>
+	      <value>com.sci.integrator.provider.openbravo.transaction.TransactionInvoiceReversal</value>
+	      <value>com.sci.integrator.provider.openbravo.transaction.TransactionPayment</value>
+	      <value>com.sci.integrator.provider.openbravo.transaction.TransactionIncidence</value>
+	      <value>com.sci.integrator.provider.openbravo.transaction.TransactionCustomerExtra</value>
+	
+		  <!-- Adempiere Transactions Classes -->
+	      <value>com.sci.integrator.provider.adempiere.transaction.TransactionOpenAdempiere</value> 
+		   		    
+          <!-- ***** BEGIN: JAXB DTOs declaration ***** -->
+          <value>com.sci.integrator.controlers.dto.UserDto</value>
+          <value>com.sci.integrator.controlers.dto.UserDtoList</value>
+          <!-- ***** END: JAXB DTOs declaration ***** -->
 
 	    </list>
 	  </property>
@@ -324,9 +339,9 @@
    </bean>
   
 	<bean id="transactionService" class="com.sci.integrator.services.relational.TransactionServiceImpl">
-	   <property name="transactionDao" ref="transactionDao" />
-     <property name="userDao" ref="userDao" />
-	 </bean>
+	 <property name="transactionDao" ref="transactionDao" />
+ 	 <property name="userDao" ref="userDao" />
+	</bean>
 	
    <bean id="routeService" class="com.sci.integrator.services.relational.RouteServiceImpl">
      <property name="routeDao" ref="routeDao" />
@@ -365,6 +380,7 @@
 
  <!-- END: Definitions of Application Events Handlers -->
 
+
 <!-- BEGIN: Definitions of Provider Factory -->
 
     <bean id="ProviderFactory" class="com.sci.integrator.provider.ProviderFactory">
@@ -374,8 +390,10 @@
 
 
 
- <!-- BEGIN: Definitions of Providers Services  ****** Changed to use ProviderFactory pattern instead. Abdiel - January 2, 2015. *****
+ <!-- BEGIN: Definitions of Providers Services -->
  
+ 	<!-- OpenBravo Provider -->
+ 	
     <bean id="obUserProviderGateway" class="com.sci.integrator.provider.openbravo.ObUserProviderGateway">
       <constructor-arg value="${remote.server.url}"/>
     </bean>
@@ -388,13 +406,38 @@
       <constructor-arg value="${remote.server.url}"/>
     </bean>
     
-   <bean id="provider" class="com.sci.integrator.provider.openbravo.ObProvider">
+   <bean id="obProvider" class="com.sci.integrator.provider.openbravo.ObProvider">
      <property name="baseUrl" value="${remote.server.url}"/>  
      <property name="providerSyncProcess" ref="obProviderSyncProcess" />
      <property name="userProviderGateway" ref="obUserProviderGateway" />
      <property name="transactionProviderGateway" ref="obTransactionProviderGateway" />
    </bean>
+
+ 
+ 	<!-- Adempiere Provider -->
+
+<!-- Implementation Pending 	
+    <bean id="adempiereUserProviderGateway" class="com.sci.integrator.provider.adempiere.AdempiereUserProviderGateway">
+      <constructor-arg value="${remote.server.url}"/>
+    </bean>
+
+    <bean id="adempiereProviderSyncProcess" class="com.sci.integrator.provider.openbravo.AdempiereSyncProcess">
+      <constructor-arg value="${remote.server.url}"/>
+    </bean>
+    
  -->
+     
+    <bean id="adempiereTransactionProviderGateway" class="com.sci.integrator.provider.adempiere.AdempiereTransactionProviderGateway">
+      <constructor-arg value=""/>
+    </bean>
+    
+   <bean id="adempiereProvider" class="com.sci.integrator.provider.adempiere.AdempiereProvider">
+     <property name="baseUrl" value=""/>  
+     <property name="providerSyncProcess" ref="obProviderSyncProcess" />
+     <property name="userProviderGateway" ref="obUserProviderGateway" />
+     <property name="transactionProviderGateway" ref="adempiereTransactionProviderGateway" />
+   </bean>
+ 
 
 
  

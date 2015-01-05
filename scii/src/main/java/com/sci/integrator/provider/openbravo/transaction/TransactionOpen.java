@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.sci.integrator.domain.core;
+package com.sci.integrator.provider.openbravo.transaction;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,6 +24,18 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import com.sci.integrator.domain.core.AppSettings;
+import com.sci.integrator.domain.core.Company;
+import com.sci.integrator.domain.core.Location;
+import com.sci.integrator.domain.core.Product;
+import com.sci.integrator.domain.core.ProductPrice;
+import com.sci.integrator.domain.core.Role;
+import com.sci.integrator.domain.core.Route;
+import com.sci.integrator.domain.core.SciiException;
+import com.sci.integrator.domain.core.SciiRequest;
+import com.sci.integrator.domain.core.SciiResponse;
+import com.sci.integrator.domain.core.SciiResult;
+import com.sci.integrator.domain.core.User;
+import com.sci.integrator.domain.core.UserData;
 import com.sci.integrator.domain.customer.Customer;
 import com.sci.integrator.domain.invoice.Invoice;
 import com.sci.integrator.domain.order.Order;

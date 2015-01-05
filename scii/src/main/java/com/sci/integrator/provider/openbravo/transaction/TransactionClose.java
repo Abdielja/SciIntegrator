@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.sci.integrator.domain.core;
+package com.sci.integrator.provider.openbravo.transaction;
 
 import java.util.Date;
 import java.util.List;
@@ -13,6 +13,12 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.sci.integrator.domain.core.SciiException;
+import com.sci.integrator.domain.core.SciiRequest;
+import com.sci.integrator.domain.core.SciiResponse;
+import com.sci.integrator.domain.core.SciiResult;
+import com.sci.integrator.domain.core.User;
+import com.sci.integrator.domain.core.UserData;
 import com.sci.integrator.services.ITransactionService;
 import com.sci.integrator.services.IUserDataService;
 import com.sci.integrator.services.IUserService;

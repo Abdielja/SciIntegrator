@@ -27,7 +27,6 @@ import com.sci.integrator.domain.core.SciiException;
 import com.sci.integrator.domain.core.SciiRequest;
 import com.sci.integrator.domain.core.SciiResponse;
 import com.sci.integrator.domain.core.SciiResult;
-import com.sci.integrator.domain.core.TransactionOpen;
 import com.sci.integrator.domain.core.User;
 import com.sci.integrator.domain.invoice.Invoice;
 import com.sci.integrator.domain.order.Order;
@@ -36,6 +35,7 @@ import com.sci.integrator.domain.payment.PaymentMethod;
 import com.sci.integrator.provider.ITransactionProviderGateway;
 import com.sci.integrator.provider.IUserProviderGateway;
 import com.sci.integrator.provider.RestBaseProviderGateway;
+import com.sci.integrator.provider.openbravo.transaction.TransactionOpen;
 import com.sci.integrator.provider.openbravo.transaction.TransactionOrder;
 import com.sci.integrator.services.IInvoiceService;
 import com.sci.integrator.services.IOrderService;
@@ -78,7 +78,7 @@ public class ObTransactionProviderGateway extends RestBaseProviderGateway
   
   // ***** private variables *****
   
-  private static final Logger logger       = LoggerFactory.getLogger(ObUserProviderGateway.class);
+  private static final Logger logger       = LoggerFactory.getLogger(ObTransactionProviderGateway.class);
 
   XPathFactory                xpathFactory = XPathFactory.newInstance();
   XPath                       xpath        = xpathFactory.newXPath();

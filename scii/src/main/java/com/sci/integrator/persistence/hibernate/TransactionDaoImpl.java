@@ -15,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.sci.integrator.domain.core.SciiResult;
-import com.sci.integrator.domain.core.TransactionOpen;
 import com.sci.integrator.domain.invoice.Invoice;
 import com.sci.integrator.domain.invoice.InvoiceLine;
 import com.sci.integrator.domain.order.Order;
@@ -24,10 +23,12 @@ import com.sci.integrator.domain.payment.Payment;
 import com.sci.integrator.domain.quotation.Quotation;
 import com.sci.integrator.domain.quotation.QuotationLine;
 import com.sci.integrator.persistence.ITransactionDAO;
+import com.sci.integrator.provider.adempiere.transaction.TransactionOpenAdempiere;
 import com.sci.integrator.provider.openbravo.transaction.TransactionCustomerExtra;
 import com.sci.integrator.provider.openbravo.transaction.TransactionIncidence;
 import com.sci.integrator.provider.openbravo.transaction.TransactionInvoice;
 import com.sci.integrator.provider.openbravo.transaction.TransactionInvoiceReversal;
+import com.sci.integrator.provider.openbravo.transaction.TransactionOpen;
 import com.sci.integrator.provider.openbravo.transaction.TransactionOrder;
 import com.sci.integrator.provider.openbravo.transaction.TransactionPayment;
 import com.sci.integrator.provider.openbravo.transaction.TransactionQuotation;
@@ -202,7 +203,7 @@ public class TransactionDaoImpl implements ITransactionDAO
     System.out.println("   Oid " + trx.getoid() + "\n");
 
         
-    // **** Save Open Transaction ****
+    // **** Save Openbravo Open Transaction ****
     if (trx.getClass() == TransactionOpen.class)
     {
            
@@ -217,6 +218,31 @@ public class TransactionDaoImpl implements ITransactionDAO
         result.settransactionOid((Long)currentSession().save(trxOpen));
         result.setreturnCode(SciiResult.RETURN_CODE_OK);
         System.out.println("TransactionOpen was created succesfully");
+      }
+      catch(Exception e)
+      {
+        System.out.println(e.getStackTrace());
+        result.setreturnCode(SciiResult.RETURN_CODE_UNIDENTFIED_ERROR);
+        result.setreturnMessage(e.getMessage());
+      }
+      
+    }
+   
+    // **** Save Adempiere Open Transaction ****
+    if (trx.getClass() == TransactionOpenAdempiere.class)
+    {
+           
+      TransactionOpenAdempiere trxOpen = (TransactionOpenAdempiere)trx;
+      
+      // *** Delete previous UserData Objects for this User ***      
+      //userDataDao.deleteByUserOid(trxOpen.getcreatedBy().getoid());
+      
+      // *** Save new Transaction ***
+      try
+      {        
+        result.settransactionOid((Long)currentSession().save(trxOpen));
+        result.setreturnCode(SciiResult.RETURN_CODE_OK);
+        System.out.println("TransactionOpenAdempiere was created succesfully");
       }
       catch(Exception e)
       {

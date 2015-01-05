@@ -27,7 +27,6 @@ import org.w3c.dom.NodeList;
 
 import com.sci.integrator.domain.core.SciiException;
 import com.sci.integrator.domain.core.SciiResult;
-import com.sci.integrator.domain.core.TransactionOpen;
 import com.sci.integrator.domain.core.User;
 import com.sci.integrator.domain.core.UserData;
 import com.sci.integrator.handlers.TransactionHandler;
@@ -35,9 +34,13 @@ import com.sci.integrator.helpers.XmlHelper;
 import com.sci.integrator.services.ILoggerService;
 import com.sci.integrator.services.ITransactionService;
 import com.sci.integrator.services.relational.SciiLoggerService;
+
 import com.sci.integrator.transaction.Transaction;
 import com.sci.integrator.transaction.TransactionError;
 import com.sci.integrator.transaction.Transactions;
+
+import com.sci.integrator.provider.openbravo.transaction.TransactionOpen;
+import com.sci.integrator.provider.adempiere.transaction.TransactionOpenAdempiere;
 
 /**
  * @author Abdiel Jaramillo Ojedis
@@ -47,7 +50,11 @@ import com.sci.integrator.transaction.Transactions;
 @RequestMapping("/rest/transactions")
 public class TransactionRestController
 {
-
+  
+  // *********************************************************
+  // ***** Inject components created in Spring Container *****
+  // *********************************************************
+  
   @Inject 
   private Jaxb2Marshaller marshaller;
   
@@ -59,6 +66,11 @@ public class TransactionRestController
   
   @Inject
   private ILoggerService loggerService;
+  
+
+  // *********************************************************
+  // *****        Public Methods Declaration             *****
+  // *********************************************************
   
   // *** Create Transaction *** 
   @RequestMapping(method=RequestMethod.POST, headers ="Content-Type=text/xml")
@@ -160,6 +172,30 @@ public class TransactionRestController
         
       }
       
+      // *** TransactionOpenAdempiere. Return UserData ***      
+      if (trx.getClass() == TransactionOpenAdempiere.class)
+      {
+ 
+        UserData ud = ((TransactionOpenAdempiere)trx).getuserData();
+
+        StringWriter sw = new StringWriter();
+        StreamResult xmlResult = new StreamResult(sw);
+        
+        try
+        {
+          marshaller.marshal(ud, xmlResult);          
+          String strXmlTrxObject = sw.toString();
+          result.setTransactionObject(strXmlTrxObject);
+        }  
+        catch(Exception e)
+        {
+          System.out.println("TransactionRestController - Processed transaction returned illegal data.");
+          result.setreturnCode((SciiResult.RETURN_CODE_INVALID_DATA_RETURNED));
+          result.setreturnMessage("TransactionRestController - Processed transaction returned illegal data. " + e.getMessage());
+        }
+        
+      }
+      
     }
     
     return result;
@@ -182,6 +218,11 @@ public class TransactionRestController
      Transactions transactions =  transactionService.getAllTransactions();
      return transactions;
   }
+  
+
+  // *********************************************************
+  // *****       Private Methods Declaration             *****
+  // *********************************************************
   
   private SciiResult processAsynchronous(Transaction trx)
   {

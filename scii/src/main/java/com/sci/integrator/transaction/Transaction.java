@@ -28,11 +28,12 @@ import org.hibernate.annotations.CascadeType;
 import com.sci.integrator.domain.core.Provider;
 import com.sci.integrator.domain.core.SciiException;
 import com.sci.integrator.domain.core.SciiResult;
-import com.sci.integrator.domain.core.TransactionOpen;
 import com.sci.integrator.domain.core.User;
+import com.sci.integrator.provider.adempiere.transaction.TransactionOpenAdempiere;
 import com.sci.integrator.provider.openbravo.transaction.TransactionIncidence;
 import com.sci.integrator.provider.openbravo.transaction.TransactionInvoice;
 import com.sci.integrator.provider.openbravo.transaction.TransactionInvoiceReversal;
+import com.sci.integrator.provider.openbravo.transaction.TransactionOpen;
 import com.sci.integrator.provider.openbravo.transaction.TransactionOrder;
 import com.sci.integrator.provider.openbravo.transaction.TransactionPayment;
 import com.sci.integrator.provider.openbravo.transaction.TransactionQuotation;
@@ -73,6 +74,9 @@ public abstract class Transaction implements ITransaction, Serializable
 
   public static final int   TRANSACTION_OPEN           = 100;
   public static final int   TRANSACTION_CLOSE          = 101;
+
+  public static final int   TRANSACTION_OPEN_ADEMPIERE = 200;
+  public static final int   TRANSACTION_CLOSE_ADEMPIERE= 201;
 
   private static final long serialVersionUID           = 1L;
 
@@ -153,13 +157,17 @@ public abstract class Transaction implements ITransaction, Serializable
     {
       trxType = "Create Order";
     }
-    else if (this.getClass() == TransactionOpen.class)
-    {
-      trxType = "Open Transaction";
-    }
     else if (this.getClass() == TransactionIncidence.class)
     {
       trxType = "Add Incidence";
+    }
+    else if (this.getClass() == TransactionOpen.class)
+    {
+      trxType = "Open Transaction Openbravo";
+    }
+    else if (this.getClass() == TransactionOpenAdempiere.class)
+    {
+      trxType = "Open Transaction Adempiere";
     }
     else
     {

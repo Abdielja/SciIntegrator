@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sci.integrator.domain.core.SciiException;
 import com.sci.integrator.domain.core.SciiResult;
-import com.sci.integrator.domain.core.TransactionOpen;
 import com.sci.integrator.domain.core.User;
 import com.sci.integrator.domain.core.UserData;
 import com.sci.integrator.domain.invoice.Invoice;
@@ -26,6 +25,7 @@ import com.sci.integrator.persistence.IUserDataDao;
 import com.sci.integrator.persistence.hibernate.UserDataDaoImpl;
 import com.sci.integrator.provider.openbravo.transaction.TransactionInvoice;
 import com.sci.integrator.provider.openbravo.transaction.TransactionInvoiceReversal;
+import com.sci.integrator.provider.openbravo.transaction.TransactionOpen;
 import com.sci.integrator.provider.openbravo.transaction.TransactionPayment;
 import com.sci.integrator.services.IInvoiceService;
 import com.sci.integrator.services.ITransactionService;
@@ -117,7 +117,7 @@ public class TransactionServiceImpl implements ITransactionService
     if (transaction.getClass() == TransactionInvoiceReversal.class)
     {
     
-      // ** Set Invoice status tu REVERSED **
+      // ** Set Invoice status to REVERSED **
       TransactionInvoiceReversal trxRev = (TransactionInvoiceReversal)transaction; 
       Invoice invoice = trxRev.getinvoice();
       invoiceService.updateInvoice(invoice);
