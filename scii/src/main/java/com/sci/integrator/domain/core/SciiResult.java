@@ -28,6 +28,7 @@ public class SciiResult implements Serializable
   public static int RETURN_CODE_INVOICE_OID_ALREADY_EXISTS = 5;
   public static int RETURN_CODE_INVALID_PROVIDER = 6;
   public static int RETURN_CODE_INVALID_DATA_RETURNED = 7;
+  public static int RETURN_CODE_INVALID_SOAP_REQUEST = 8;
   
   private static final long serialVersionUID = 1L;
   

@@ -3,10 +3,21 @@
  */
 package com.sci.integrator.provider.adempiere;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.xml.soap.MessageFactory;
+import javax.xml.soap.MimeHeaders;
+import javax.xml.soap.SOAPBody;
+import javax.xml.soap.SOAPConnection;
+import javax.xml.soap.SOAPConnectionFactory;
+import javax.xml.soap.SOAPElement;
+import javax.xml.soap.SOAPEnvelope;
+import javax.xml.soap.SOAPException;
+import javax.xml.soap.SOAPMessage;
+import javax.xml.soap.SOAPPart;
 import javax.xml.transform.dom.DOMSource;
 
 import org.springframework.http.HttpEntity;
@@ -27,6 +38,7 @@ import com.sci.integrator.domain.payment.PaymentMethod;
 import com.sci.integrator.provider.ITransactionProviderGateway;
 import com.sci.integrator.provider.IUserProviderGateway;
 import com.sci.integrator.provider.SOAPBaseProviderGateway;
+import com.sci.integrator.provider.adempiere.transaction.TransactionOpenAdempiere;
 import com.sci.integrator.provider.openbravo.transaction.TransactionOpen;
 import com.sci.integrator.services.IInvoiceService;
 import com.sci.integrator.services.IOrderService;
@@ -69,7 +81,7 @@ public class AdempiereTransactionProviderGateway extends SOAPBaseProviderGateway
   
 	public AdempiereTransactionProviderGateway(String serverUrl)
   {
-	  this.setBaseUrl(serverUrl);
+	  this.setBaseUrl("http://172.16.50.40:8081/ADInterface/services");
   }
 
 	
@@ -79,32 +91,18 @@ public class AdempiereTransactionProviderGateway extends SOAPBaseProviderGateway
 
     startTime = new Date().getTime();
     
-    HttpHeaders headers;
-
     com.sci.integrator.domain.core.User user = trx.getcreatedBy();
-    
-    // *** Set credentials for server side authentication ***
-    if (trx.getClass().equals(TransactionOpen.class))
-    {
-      headers = this.createHeaders("Adempiere", "123");
-    }
-    else
-    {
-      headers = this.createHeaders(user.getuserName(), user.getpassword());
-    }
-    
+        
     // *** Get Main Transaction request string ***
     SciiRequest mainRequest = trx.buildMainRequest();
 
-    if (mainRequest != null)
+    if (mainRequest != null && !mainRequest.getVars().isEmpty())
     {
       
       try
       {
   
-        setDefaultUserRole(trx);        
-        
-        ResponseEntity<DOMSource> responseEntity = sendRequestToServer(mainRequest, headers);
+        ResponseEntity<DOMSource> responseEntity = sendRequestToServer(mainRequest);
                      
         SciiResponse response = new SciiResponse();
         response.setException(null);
@@ -144,8 +142,10 @@ public class AdempiereTransactionProviderGateway extends SOAPBaseProviderGateway
     }
     else
     {
+      String strError = "ERROR - Adempiere: Failed to build request for transaction with oid " + trx.getoid() + " - " + trx.getdescription();
+      System.out.println(strError);
       trx.setstatus(Transaction.STATUS_FAILED);
-      throw new SciiException("Adempiere: Failed to build request for transaction with oid " + trx.getoid() + " - " + trx.getdescription());
+      throw new SciiException(strError);
     }
     
     // *** Process sub requests if any ***
@@ -163,9 +163,7 @@ public class AdempiereTransactionProviderGateway extends SOAPBaseProviderGateway
         try
         {
 
-          setDefaultUserRole(trx);        
-          
-          subResponseEntity = sendRequestToServer(request, headers);
+          subResponseEntity = sendRequestToServer(request);
                   
           SciiResponse subResponse = new SciiResponse();
           subResponse.setIndex(i);
@@ -318,41 +316,82 @@ public class AdempiereTransactionProviderGateway extends SOAPBaseProviderGateway
 		return trx;
 	}
 
-  private ResponseEntity<DOMSource> sendRequestToServer(SciiRequest request, HttpHeaders headers) throws SciiException
+  private ResponseEntity<DOMSource> sendRequestToServer(SciiRequest request) throws SciiException
   {
     
     // ******************************* WARNING - Temporal ***********************************
-    ResponseEntity<DOMSource> responseEntity;
-    throw new SciiException("Transaction processing for Adempiere is not implemented yet.", SciiResult.RETURN_CODE_UNIDENTFIED_ERROR);
+    //throw new SciiException("Transaction processing for Adempiere is not implemented yet.", SciiResult.RETURN_CODE_UNIDENTFIED_ERROR);
     // **************************************************************************************
-/*     
-    HttpEntity<Object> httpEntity = new HttpEntity<Object>(request.getStrRequest() , headers);
-   
-    if(!request.getWhereClause().isEmpty())
-    {
-      responseEntity = restTemplate.exchange(getBaseUrl() + request.getUrlExtension(), request.getHttpMethod(), httpEntity, DOMSource.class, request.getWhereClause());
-    }
-    else
-    {
-      responseEntity = restTemplate.exchange(getBaseUrl() + request.getUrlExtension(), request.getHttpMethod(), httpEntity, DOMSource.class, request.getVars());          
-    }
 
+    ResponseEntity<DOMSource> responseEntity = null;
+
+    if (!request.getVars().isEmpty())
+    {
+      try 
+      {
+        // Create SOAP Connection
+        SOAPConnectionFactory soapConnectionFactory = SOAPConnectionFactory.newInstance();
+        SOAPConnection soapConnection = soapConnectionFactory.createConnection();
+
+        // Send SOAP Message to SOAP Server
+        String url = this.getBaseUrl() + request.getUrlExtension();
+        
+        SOAPMessage soapRequest = createSOAPRequest(request);
+
+        /* Print the request message */
+        System.out.print("Request SOAP Message = ");
+        soapRequest.writeTo(System.out);
+        System.out.println(); 
+        
+        SOAPMessage soapResponse = soapConnection.call(soapRequest, url);
+
+        // Process the SOAP Response
+
+        soapConnection.close();
+      } 
+      catch (Exception e) 
+      {
+        SciiException sciiE = new SciiException(e.getMessage(), SciiResult.RETURN_CODE_INVALID_SOAP_REQUEST);        
+        throw sciiE;
+      }
+      
+    }
+    
     return responseEntity;
-*/    
+    
   }
 
-  public void setDefaultUserRole(Transaction trx) throws SciiException
+  public SOAPMessage createSOAPRequest(SciiRequest request) throws SOAPException
   {
+    MessageFactory messageFactory = MessageFactory.newInstance();
+    SOAPMessage soapMessage = messageFactory.createMessage();
+    SOAPPart soapPart = soapMessage.getSOAPPart();
+
+    String serverURI = this.getBaseUrl();
+
+    // SOAP Envelope
+    SOAPEnvelope envelope = soapPart.getEnvelope();
+    envelope.addNamespaceDeclaration("adin", "http://3e.pl/ADInterface");
     
-    if (trx.getClass() != TransactionOpen.class)
-    {
-      // ***** Change default role *****
-      // ******** Change this. Should only be one call ********
-      //userProviderGateway.setDefaultUserRole(trx.getcreatedBy(), trx.getorganizationId(), trx.getroleId(), trx.getwarehouseId());
-      //userProviderGateway.setDefaultUserRole(trx.getcreatedBy(), trx.getorganizationId(), trx.getroleId(), trx.getwarehouseId());
-      // ******************************************************    
-    }
+    // SOAP Body
+    SOAPBody soapBody = envelope.getBody();
+    SOAPElement sbeQueryData = soapBody.addChildElement("queryData", "adin");
     
+    SOAPElement sbeModelCRUDRequest = sbeQueryData.addChildElement("ModelCRUDRequest", "adin");
+    SOAPElement sbeModelCRUD = sbeModelCRUDRequest.addChildElement("ModelCRUD", "adin");
+    SOAPElement sbeADLoginRequest = sbeModelCRUDRequest.addChildElement("ModelCRUD", "adin");
+/*    
+    soapBodyElem1.addTextNode("mutantninja@gmail.com");
+    SOAPElement soapBodyElem2 = soapBodyElem.addChildElement("LicenseKey", "example");
+    soapBodyElem2.addTextNode("123");
+*/
+    MimeHeaders headers = soapMessage.getMimeHeaders();
+    headers.addHeader("SOAPAction", serverURI  + request.getUrlExtension());
+
+    soapMessage.saveChanges();
+
+    
+    return soapMessage;
   }
   
 }

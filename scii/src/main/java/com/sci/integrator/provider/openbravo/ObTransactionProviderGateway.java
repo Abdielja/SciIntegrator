@@ -9,6 +9,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.soap.SOAPConnection;
+import javax.xml.soap.SOAPConnectionFactory;
+import javax.xml.soap.SOAPMessage;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
@@ -332,8 +335,8 @@ public class ObTransactionProviderGateway extends RestBaseProviderGateway
   private ResponseEntity<DOMSource> sendRequestToServer(SciiRequest request, HttpHeaders headers)
   {
     
-    ResponseEntity<DOMSource> responseEntity;
-    
+    ResponseEntity<DOMSource> responseEntity = null;
+   
     HttpEntity<Object> httpEntity = new HttpEntity<Object>(request.getStrRequest() , headers);
     
     if(!request.getWhereClause().isEmpty())

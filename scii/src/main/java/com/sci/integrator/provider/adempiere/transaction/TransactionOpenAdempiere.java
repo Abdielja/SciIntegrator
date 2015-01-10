@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.sci.integrator.provider.openbravo.transaction;
+package com.sci.integrator.provider.adempiere.transaction;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -23,7 +22,6 @@ import org.springframework.http.HttpMethod;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.sci.integrator.domain.core.AppSettings;
 import com.sci.integrator.domain.core.Company;
 import com.sci.integrator.domain.core.Location;
 import com.sci.integrator.domain.core.Product;
@@ -49,13 +47,16 @@ import com.sci.integrator.transaction.Transaction;
  * 
  */
 @Entity
-@XmlRootElement(name = "transactionOpen")
-@DiscriminatorValue(value = "100")
+@XmlRootElement(name = "transactionOpenAdempiere")
+@DiscriminatorValue(value = "200")
 //@XmlAccessorType(XmlAccessType.FIELD)
-public class TransactionOpen extends Transaction
+public class TransactionOpenAdempiere extends Transaction
 {
 
-  private static final long serialVersionUID = 1L;
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 2L;
 
   // ***** Persistence Services *****
   
@@ -79,7 +80,7 @@ public class TransactionOpen extends Transaction
   
   // ***** Constructors *****
   
-  public TransactionOpen()
+  public TransactionOpenAdempiere()
   {
   }
 
@@ -93,7 +94,7 @@ public class TransactionOpen extends Transaction
     
     com.sci.integrator.domain.core.User user = this.getcreatedBy();
 
-    System.out.println("Openbravo Transaction - Open: " + this.getoid());
+    System.out.println("Adempiere - Transaction Open: " + this.getoid());
 
     UserData userData = new UserData();
     userData.setUserOid(user.getoid());
@@ -107,20 +108,32 @@ public class TransactionOpen extends Transaction
   public SciiRequest buildMainRequest()
   {
     
-    SciiRequest request = new SciiRequest();
-    
     // *** Get User object ***
     user = this.getcreatedBy(); 
 
-    String strUrlExt = "ws/dal/ADUser";
-    String whereClause = "id='" + user.getserverId() + "'";
+    String strUrlExt = "/ModelADService";
+    String strRequest = "";
 
-    request.setUrlExtension(strUrlExt);
-    request.setWhereClause(whereClause);
-    request.setHttpMethod(HttpMethod.GET);
-    request.setWhereClause(whereClause);
+    SciiRequest request = new SciiRequest();
     
-    System.out.println("  TransactionOpen - " + this.getoid() + " main request created.");
+    request.setUrlExtension(strUrlExt);
+    request.setHttpMethod(null);   
+
+    request.getVars().clear();
+    request.getVars().put("serviceType", "XX_int_org");
+    request.getVars().put("TableName", "xx_int_organization");
+    request.getVars().put("Action", "Read");
+    
+    request.getVars().put("user", "Vendedor");
+    request.getVars().put("pass", "Vendedor");
+    request.getVars().put("lang", "192");
+    request.getVars().put("ClientID", "1000000");
+    request.getVars().put("RoleID", "1000004");
+    request.getVars().put("OrgID", "1000004");
+    request.getVars().put("WarehouseID", "1000000");
+    request.getVars().put("stage", "0");
+    
+    System.out.println("  Adempiere: TransactionOpen - " + this.getoid() + " main request created.");
     
     this.timeKeeper = new Date().getTime();
     
@@ -130,36 +143,47 @@ public class TransactionOpen extends Transaction
   public void processMainResponse(SciiResponse response)
   {
     
-    Node xmlDoc = response.getResponseEntity().getBody().getNode();
-    
-    // *** Parse response's XML ***
-
-    userData = new UserData();
-    
-    userData.setUserOid(this.getcreatedBy().getoid());
-    userData.setUserServerId((String)XmlHelper.readFromXml(xmlDoc, "//ADUser//id", XPathConstants.STRING));
-    userData.setName((String)XmlHelper.readFromXml(xmlDoc, "//ADUser//name", XPathConstants.STRING));
-    userData.setBusinessPartnerId((String)XmlHelper.readFromXml(xmlDoc, "//ADUser//businessPartner/@id", XPathConstants.STRING));
-    userData.setStartDate(new Date());
+    if (response.getException() != null)
+    {
+      userData = new UserData();
+      userData.setUserOid(this.getcreatedBy().getoid());
+      userData.setStartDate(new Date());
+  /*    
+      // *** Parse response's XML ***
+  
+      Node xmlDoc = response.getResponseEntity().getBody().getNode();
+  
+      userData.setUserServerId((String)XmlHelper.readFromXml(xmlDoc, "//ADUser//id", XPathConstants.STRING));
+      userData.setName((String)XmlHelper.readFromXml(xmlDoc, "//ADUser//name", XPathConstants.STRING));
+      userData.setBusinessPartnerId((String)XmlHelper.readFromXml(xmlDoc, "//ADUser//businessPartner/@id", XPathConstants.STRING));
+  */ 
+    }
+    else
+    {
+      
+    }
     
     long currentTime = new Date().getTime();
     long elapsedTime = currentTime - this.timeKeeper;
     this.timeKeeper = currentTime;
     
-    System.out.println("  TransactionOpen - " + this.getoid() + " main request processed. " + elapsedTime + " ms.");
+    System.out.println("  Adempiere: TransactionOpen - " + this.getoid() + " main request processed. " + elapsedTime + " ms.");
   }
 
   public List<SciiRequest> buildSubRequests()
   {
 
     ArrayList<SciiRequest> requests = new ArrayList<SciiRequest>();
+
+    // ******************** TODO: Implementation pending *************************
+    /*
     SciiRequest request;
    
     // *** Create Load Companies Request ***
     
     request = new SciiRequest();
     request.setTag("Load Companies");
-    request.setUrlExtension("ws/dal/Organization?where={orgType}&includeChildren={includeChildren}");
+    request.setUrlExtension("/ModelADService}");
 
     request.getVars().clear();
     request.getVars().put("orgType", "organizationType.id=1");
@@ -238,6 +262,10 @@ public class TransactionOpen extends Transaction
 
     System.out.println("    Load Pending Orders request created.");
 
+    return requests;
+    */
+    
+    // ******************** TODO: Implementation pending *************************
     return requests;
   }
  
@@ -426,9 +454,9 @@ public class TransactionOpen extends Transaction
         try
         {
           invoice.setcreationDate(sdf.parse(creationDate));
-        } catch (ParseException e)
+        } 
+        catch (ParseException e)
         {
-          // TODO Auto-generated catch block
           e.printStackTrace();
         }
         invoice.setcustomerId((String)XmlHelper.readFromXml(xmlInvoiceList.item(i), "BusinessPartnerId", XPathConstants.STRING));
@@ -486,7 +514,6 @@ public class TransactionOpen extends Transaction
         } 
         catch (ParseException e)
         {
-          // TODO Auto-generated catch block
           e.printStackTrace();
         }
         
@@ -544,5 +571,5 @@ public class TransactionOpen extends Transaction
     super.validate();
     System.out.println("END - Transaction Validation.");
   }
-  
+
 }

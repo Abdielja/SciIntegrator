@@ -417,6 +417,7 @@
  	<!-- Adempiere Provider -->
 
 <!-- Implementation Pending 	
+
     <bean id="adempiereUserProviderGateway" class="com.sci.integrator.provider.adempiere.AdempiereUserProviderGateway">
       <constructor-arg value="${remote.server.url}"/>
     </bean>

@@ -6,6 +6,8 @@ package com.sci.integrator.domain.core;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.xml.soap.SOAPMessage;
+
 import org.springframework.http.HttpMethod;
 
 /**
@@ -20,6 +22,7 @@ public class SciiRequest
   private String tag;
   private String urlExtension;
   private String strRequest;
+  private SOAPMessage soapRequest;
   private HttpMethod httpMethod;
   private String whereClause;
   private Map<String, String> vars;
@@ -74,6 +77,21 @@ public class SciiRequest
     this.strRequest = strRequest;
   }
 
+  /**
+   * @return the soapRequest
+   */
+  public SOAPMessage getSOAPRequest()
+  {
+    return soapRequest;
+  }
+
+  /**
+   * @param status the status to set
+   */
+  public void setSOAPRequest(SOAPMessage soapRequest)
+  {
+    this.soapRequest = soapRequest;
+  }
 
   /**
    * @return the status
