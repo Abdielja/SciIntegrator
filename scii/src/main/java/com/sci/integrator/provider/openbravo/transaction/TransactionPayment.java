@@ -72,16 +72,32 @@ public class TransactionPayment extends Transaction implements Serializable
     }
     else
     {
-      if (invoice.getstatus() == Invoice.STATUS_DRAFT || invoice.getstatus() ==  Invoice.STATUS_PENDING)
-      {
-        sr.setreturnCode(Transaction.STATUS_INVOICE_PENDING);
-        sr.setreturnMessage("Payment " + payment.getoid() + " can not be processed because Invoice " + invoice.getoid() + " has not been processed yet.");              
-      }
-      if (invoice.getstatus() == Invoice.STATUS_REVERSED)
-      {
-        sr.setreturnCode(Transaction.STATUS_INVOICE_REVERSED);
-        sr.setreturnMessage("Payment " + payment.getoid() + " can not be processed because Invoice " + invoice.getoid() + " has been reversed.");              
-      }
+        if (invoice.getstatus() == Invoice.STATUS_DRAFT || invoice.getstatus() ==  Invoice.STATUS_PENDING)
+        {
+
+          /* ***** Se quito esto porque estaba dando problemas frequentes. VERIFICAR BIEN !!!!! *****
+           * 
+          sr.setreturnCode(Transaction.STATUS_INVOICE_PENDING);
+          sr.setreturnMessage("Payment " + payment.getoid() + " can not be processed because Invoice " + invoice.getoid() + " has not been processed yet.");
+          */              
+          
+          sr.setreturnMessage("WARNING: Payment " + payment.getoid() + " can not be processed because Invoice " + invoice.getoid() + " has not been processed yet.");
+          sr.setreturnCode(Transaction.STATUS_VALIDATED);
+        
+        }
+        if (invoice.getstatus() == Invoice.STATUS_REVERSED)
+        {
+          
+          /* ***** Se quito esto porque estaba dando problemas frequentes. VERIFICAR BIEN !!!!! *****
+           * 
+          sr.setreturnCode(Transaction.STATUS_INVOICE_REVERSED);
+          sr.setreturnMessage("Payment " + payment.getoid() + " can not be processed because Invoice " + invoice.getoid() + " has been reversed.");
+          */
+          
+          sr.setreturnMessage("WARNING: Payment " + payment.getoid() + " can not be processed because Invoice " + invoice.getoid() + " has been reversed.");
+          sr.setreturnCode(Transaction.STATUS_VALIDATED);
+          
+        }
     }
     
     return sr;
