@@ -79,14 +79,13 @@ public class AdempiereTransactionProviderGateway extends SOAPBaseProviderGateway
   
   private long startTime;
   
-	public AdempiereTransactionProviderGateway(String serverUrl)
+  public AdempiereTransactionProviderGateway(String serverUrl)
   {
 	  this.setBaseUrl("http://172.16.50.40:8081/ADInterface/services");
   }
 
-	
   @Override
-	public Transaction processTransaction(Transaction trx) throws SciiException 
+  public Transaction processTransaction(Transaction trx) throws SciiException 
   {
 
     startTime = new Date().getTime();
@@ -319,10 +318,6 @@ public class AdempiereTransactionProviderGateway extends SOAPBaseProviderGateway
   private ResponseEntity<DOMSource> sendRequestToServer(SciiRequest request) throws SciiException
   {
     
-    // ******************************* WARNING - Temporal ***********************************
-    //throw new SciiException("Transaction processing for Adempiere is not implemented yet.", SciiResult.RETURN_CODE_UNIDENTFIED_ERROR);
-    // **************************************************************************************
-
     ResponseEntity<DOMSource> responseEntity = null;
 
     if (!request.getVars().isEmpty())
