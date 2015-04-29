@@ -79,7 +79,7 @@ public class AdempiereTransactionProviderGateway extends SOAPBaseProviderGateway
   
   private long startTime;
   
-  public AdempiereTransactionProviderGateway(String serverUrl)
+  public AdempiereTransactionProviderGateway(String serverUrl) 
   {
 	  this.setBaseUrl("http://172.16.50.40:8081/ADInterface/services");
   }
