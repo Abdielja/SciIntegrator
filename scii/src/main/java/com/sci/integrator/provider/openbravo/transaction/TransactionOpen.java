@@ -112,13 +112,13 @@ public class TransactionOpen extends Transaction
     // *** Get User object ***
     user = this.getcreatedBy(); 
 
-    String strUrlExt = "ws/dal/ADUser";
-    String whereClause = "id='" + user.getserverId() + "'";
+    String strUrlExt = "ws/dal/ADUser/" + user.getserverId();
+    //String whereClause = "";
 
     request.setUrlExtension(strUrlExt);
-    request.setWhereClause(whereClause);
+    request.getVars().clear();
+    request.setWhereClause("");
     request.setHttpMethod(HttpMethod.GET);
-    request.setWhereClause(whereClause);
     
     System.out.println("  TransactionOpen - " + this.getoid() + " main request created.");
     

@@ -125,7 +125,7 @@ public class ObTransactionProviderGateway extends RestBaseProviderGateway
       {
   
         /*
-         *  Estamos probando sin tener que cambiar de default role para
+         *  TODO: Probar sin tener que cambiar de default role para
          *  agilizar el procesamiento de transacciones.
          */
         
@@ -338,7 +338,7 @@ public class ObTransactionProviderGateway extends RestBaseProviderGateway
     ResponseEntity<DOMSource> responseEntity = null;
    
     HttpEntity<Object> httpEntity = new HttpEntity<Object>(request.getStrRequest() , headers);
-    
+     
     if(!request.getWhereClause().isEmpty())
     {
       responseEntity = restTemplate.exchange(getBaseUrl() + request.getUrlExtension(), request.getHttpMethod(), httpEntity, DOMSource.class, request.getWhereClause());
