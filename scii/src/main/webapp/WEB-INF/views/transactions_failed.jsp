@@ -1,69 +1,60 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page session="false"%>
 <html>
+
 <head>
+
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
 <title>Transacciones con Errores</title>
 
 <link rel="stylesheet" href="resources/scii.css" />
 
-<link rel="stylesheet" href="resources/js/jqwidgets/styles/jqx.base.css"
-	type="text/css" />
-<link rel="stylesheet"
-	href="resources/js/jqwidgets/styles/jqx.shinyblack.css" type="text/css" />
-<link rel="stylesheet"
-	href="resources/js/jqwidgets/styles/jqx.ui-sunny.css" type="text/css" />
+<link rel="stylesheet" href="resources/js/jqwidgets/styles/jqx.base.css" type="text/css" />
+<link rel="stylesheet" href="resources/js/jqwidgets/styles/jqx.shinyblack.css" type="text/css" />
+<link rel="stylesheet" href="resources/js/jqwidgets/styles/jqx.ui-sunny.css" type="text/css" />
 
 <script type="text/javascript" src="resources/js/jquery-1.9.1.min.js"></script>
 
 <script type="text/javascript" src="resources/js/jqwidgets/jqxcore.js"></script>
 <script type="text/javascript" src="resources/js/jqwidgets/jqxdata.js"></script>
-<script type="text/javascript"
-	src="resources/js/jqwidgets/jqxbuttons.js"></script>
-<script type="text/javascript"
-	src="resources/js/jqwidgets/jqxscrollbar.js"></script>
+<script type="text/javascript" src="resources/js/jqwidgets/jqxbuttons.js"></script>
+<script type="text/javascript" src="resources/js/jqwidgets/jqxscrollbar.js"></script>
 <script type="text/javascript" src="resources/js/jqwidgets/jqxmenu.js"></script>
-<script type="text/javascript"
-	src="resources/js/jqwidgets/jqxlistbox.js"></script>
-<script type="text/javascript"
-	src="resources/js/jqwidgets/jqxdropdownlist.js"></script>
+<script type="text/javascript" src="resources/js/jqwidgets/jqxlistbox.js"></script>
+<script type="text/javascript" src="resources/js/jqwidgets/jqxdropdownlist.js"></script>
 <script type="text/javascript" src="resources/js/jqwidgets/jqxgrid.js"></script>
-<script type="text/javascript"
-	src="resources/js/jqwidgets/jqxgrid.selection.js"></script>
-<script type="text/javascript"
-	src="resources/js/jqwidgets/jqxgrid.columnsresize.js"></script>
-<script type="text/javascript"
-	src="resources/js/jqwidgets/jqxgrid.filter.js"></script>
-<script type="text/javascript"
-	src="resources/js/jqwidgets/jqxgrid.sort.js"></script>
-<script type="text/javascript"
-	src="resources/js/jqwidgets/jqxgrid.pager.js"></script>
-<script type="text/javascript"
-	src="resources/js/jqwidgets/jqxgrid.grouping.js"></script>
-<script type="text/javascript"
-	src="resources/js/jqwidgets/jqxbuttons.js"></script>
-<script type="text/javascript"
-	src="resources/js/jqwidgets/jqxnavigationbar.js"></script>
+<script type="text/javascript" src="resources/js/jqwidgets/jqxgrid.selection.js"></script>
+<script type="text/javascript" src="resources/js/jqwidgets/jqxgrid.columnsresize.js"></script>
+<script type="text/javascript" src="resources/js/jqwidgets/jqxgrid.filter.js"></script>
+<script type="text/javascript" src="resources/js/jqwidgets/jqxgrid.sort.js"></script>
+<script type="text/javascript" src="resources/js/jqwidgets/jqxgrid.pager.js"></script>
+<script type="text/javascript" src="resources/js/jqwidgets/jqxgrid.grouping.js"></script>
+<script type="text/javascript" src="resources/js/jqwidgets/jqxbuttons.js"></script>
+<script type="text/javascript" src="resources/js/jqwidgets/jqxnavigationbar.js"></script>
 <script type="text/javascript" src="resources/js/jqwidgets/jqxwindow.js"></script>
 
 <script type="text/javascript" src="resources/js/views/header.js"></script>
 
 </head>
+
 <body>
 
 	<div id="wrapper">
 
 		<script type="text/javascript">
-      function onUsersLoaded(userList)
-      {
-        console.log(userList);
-      }
+		
+			function onUsersLoaded(userList) 
+			{
+				console.log(userList);
+			}
 
-      $(document).ready(function()
-      {
-        createMenu();
-      });
-    </script>
+			$(document).ready(function() 
+						{
+							createMenu();
+						});
+		
+		</script>
 
 		<header id="main_header">
 			<figure id="main_logo">
@@ -92,10 +83,8 @@
 
 					<li>Transacciones
 						<ul>
-							<li><a href="transactions?userOid=0">Busqueda
-									Transacciones</a></li>
-							<li><a href="transactions_failed">Transacciones con
-									errores</a></li>
+							<li><a href="transactions?userOid=0">Busqueda Transacciones</a></li>
+							<li><a href="transactions_failed">Transacciones con errores</a></li>
 						</ul>
 					</li>
 
@@ -108,6 +97,74 @@
 		<div id="pageTitle" class="page_title">Transacciones con Errores
 		</div>
 
+		<div id="criteriaOptions">
+
+	    <form action="submit">
+		    <table cellspacing="3" style="font-family: Verdana; font-size: 10pt;">
+
+		     <tr>
+
+		       <td>Usuario </td>
+           <td>Tipo Transaccion </td>
+           <td>
+		        <input id="btnSearch" type="button" value="Buscar" onClick="btnSearchClicked(this);" style="width: 80px; height: 23px;">
+		       </td>
+		       
+		     </tr>
+
+		     <tr>
+ 
+           <td>
+             <Select id="userList" onChange="userListChanged(this);">
+               <option value="0">Todos</option>
+               <option value="1">Edgardo Natis</option>
+               <option value="8">Alberto Chavarria</option>
+               <option value="14">Raul Espinosa</option>
+               <option value="11">Jorge Mackay</option>
+               <option value="13">Raul Gutierrez</option>
+               <option value="12">Laureano Ojo</option>
+               <option value="2">Cesar Arboleda</option>
+               <option value="7">Samuel Castillo</option>
+               <option value="9">Nicolas Madero</option>
+               <option value="6">Robinson Crespo</option>
+               <option value="3">Alexander Martinez</option>
+               <option value="5">Miguel Contini</option>
+               <option value="4">Julio Cesar</option>
+               <option value="10">Dionel de Icaza</option>
+               <option value="16">Felix Villarreal</option>
+             </Select>
+           </td>
+
+           <td>
+             <Select id="trxTypeList" onChange="trxTypeListChanged(this);">
+               <option value="-1">Todas</option>
+                <option value="0">Cotizacion</option>
+                <option value="1">Pedido</option>
+                <option value="2">Factura</option>
+                <option value="3">Pago</option>
+                <option value="5">Reversion Factura</option>
+                <option value="6">Incidencia</option>
+                <option value="100">Apertura</option>
+                <option value="101">Cierre</option>
+             </Select>
+           </td>
+
+		     </tr>
+
+		     <tr>
+		     
+           <td id="trxCounter" colspan="3" style="font-weight: bold; color: Gray;">
+           </td>
+ 
+		     </tr>
+
+		    </table>
+		  </form>
+			
+		</div>
+
+		<br />
+				
 		<div class="main_section">
 
 			<br />
@@ -123,7 +180,7 @@
 					<td>Fecha</td>
 					<td>Usuario</td>
 					<td>Status</td>
-          <td>Retries</td>
+					<td>Retries</td>
 				</tr>
 
 				<c:forEach items="${transactions}" var="transaction">
@@ -136,7 +193,7 @@
 						<td><c:out value="${transaction.creationDate}" /></td>
 						<td><c:out value="${transaction.createdBy.name}" /></td>
 						<td><c:out value="${transaction.status}" /></td>
-            <td><c:out value="${transaction.retries}" /></td>
+						<td><c:out value="${transaction.retries}" /></td>
 					</tr>
 
 					<c:if test="${transaction.trxType == 'Create Invoice'}">
@@ -170,7 +227,7 @@
 
 					<c:if test="${transaction.trxType == 'Pay Invoice'}">
 						<c:if test="${transaction.payment.amount > 0}">
-	            <tr>
+							<tr>
 								<td colspan="7">
 									<table
 										style="font-size: 10pt; margin-left: 20px; border-style: solid; border-color: DarkGray; border-width: 1px">
@@ -209,7 +266,8 @@
 							<table
 								style="font-size: 10pt; margin-left: 20px; border-style: solid; border-color: Red; border-width: 1px">
 								<tr>
-									<td colspan="4" style="color: Gray; font-weight: bold">Detalles de Error</td>
+									<td colspan="4" style="color: Gray; font-weight: bold">Detalles
+										de Error</td>
 								</tr>
 								<tr>
 									<td style="color: Gray">Mensaje</td>
@@ -234,9 +292,11 @@
 		</div>
 
 		<br />
+		
 		<footer class="main_footer">Copyright Spirit Consulting, Inc. 2010-2013 </footer>
 
 	</div>
 
 </body>
+
 </html>
