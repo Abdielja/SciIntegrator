@@ -93,7 +93,7 @@ function UserData()
 
     this.totals.totalMissing = 0;
     
-    // *** Compute inventory diferences ***
+    // *** Compute inventory differences ***
     for(var i=0; i < this.products.length; i++)
     {
       var product = this.products[i];
