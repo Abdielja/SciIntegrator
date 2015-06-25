@@ -5,6 +5,7 @@ package com.sci.integrator.controlers.rest;
 
 
 import java.io.StringWriter;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -34,11 +35,9 @@ import com.sci.integrator.helpers.XmlHelper;
 import com.sci.integrator.services.ILoggerService;
 import com.sci.integrator.services.ITransactionService;
 import com.sci.integrator.services.relational.SciiLoggerService;
-
 import com.sci.integrator.transaction.Transaction;
 import com.sci.integrator.transaction.TransactionError;
 import com.sci.integrator.transaction.Transactions;
-
 import com.sci.integrator.provider.openbravo.transaction.TransactionOpen;
 import com.sci.integrator.provider.adempiere.transaction.TransactionOpenAdempiere;
 
@@ -117,6 +116,7 @@ public class TransactionRestController
     System.out.println("  Unmarshalling...");
     Transaction trx = (Transaction)marshaller.unmarshal(xmlTrx);
     trx.setcreatedBy(user);
+    trx.setcreationDate(new Date());
      
     // ** Validate Transaction Before Saving**
     System.out.println("  Validating...");
