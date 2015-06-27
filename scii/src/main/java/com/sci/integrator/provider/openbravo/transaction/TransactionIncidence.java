@@ -73,8 +73,11 @@ public class TransactionIncidence extends Transaction implements Serializable
   
   public SciiRequest buildMainRequest()
   {
-    System.out.println("Processed.");
-    return null;
+	  
+	SciiRequest sr = new SciiRequest();
+	sr.setStatus(STATUS_PROCESSED);
+	
+    return sr;
   }
 
   public List<SciiRequest> buildSubRequests()

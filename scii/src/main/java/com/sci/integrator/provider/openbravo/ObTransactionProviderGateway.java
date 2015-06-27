@@ -129,17 +129,25 @@ public class ObTransactionProviderGateway extends RestBaseProviderGateway
          *  agilizar el procesamiento de transacciones.
          */
         
-        setDefaultUserRole(trx);        
-        
-        ResponseEntity<DOMSource> responseEntity = sendRequestToServer(mainRequest, headers);
-                     
-        SciiResponse response = new SciiResponse();
-        response.setException(null);
-        response.setResponseEntity(responseEntity);
-       
-        // *** Process main response ***
-        trx.processMainResponse(response);
-        
+    	// *** IF and ELSE added on june 26, 2015 ***
+    	if (mainRequest.getStatus() != Transaction.STATUS_PROCESSED)
+    	{
+	        setDefaultUserRole(trx);        
+	        
+	        ResponseEntity<DOMSource> responseEntity = sendRequestToServer(mainRequest, headers);
+	                     
+	        SciiResponse response = new SciiResponse();
+	        response.setException(null);
+	        response.setResponseEntity(responseEntity);
+	       
+	        // *** Process main response ***
+	        trx.processMainResponse(response);
+    	}
+    	else
+    	{
+    		System.out.println("Processed.");
+    	}
+    	
       }
       catch (HttpServerErrorException eHttp)
       {
