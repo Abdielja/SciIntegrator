@@ -62,7 +62,7 @@
 			</figure>
 			<hgroup>
 				<h1>Spirit System Integrator</h1>
-				<h2>Version 3.32</h2>
+				<h2>Version 3.32a</h2>
 			</hgroup>
 		</header>
 
