@@ -4,6 +4,7 @@
 package com.sci.integrator.persistence.hibernate;
 
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.Iterator;
 
 import javax.inject.Inject;
@@ -202,7 +203,10 @@ public class TransactionDaoImpl implements ITransactionDAO
     System.out.println("   " + trx.gettrxType() + "\n");
     System.out.println("   Oid " + trx.getoid() + "\n");
 
-        
+    // *** Added july 1, 2015 ***
+    // TODO Tests pending   
+    Date today = new Date();
+    
     // **** Save Openbravo Open Transaction ****
     if (trx.getClass() == TransactionOpen.class)
     {
@@ -260,6 +264,12 @@ public class TransactionDaoImpl implements ITransactionDAO
       // *** Save Quotation first ***
       TransactionQuotation trxQuotation = (TransactionQuotation)trx;      
       Quotation quotation = trxQuotation.getquotation();
+      
+      // *** Added july 1, 2015 ***
+      // TODO Tests pending   
+      //quotation.setCreatedBy(trxQuotation.getcreatedBy());
+      quotation.setcreationDate(trxQuotation.getcreationDate());
+      
       Long quotationOid = (Long)currentSession().save(quotation);
       quotation.setoid(quotationOid);
       result.setaffectedObjectOid(quotation.getoid());
@@ -385,6 +395,7 @@ public class TransactionDaoImpl implements ITransactionDAO
       TransactionIncidence trxIncidence = (TransactionIncidence)trx;
       
       trxIncidence.getIncidence().setCreatedBy(trxIncidence.getcreatedBy());
+
       // *** Save new Transaction ***
       result.settransactionOid((Long)currentSession().save(trxIncidence));
       result.setreturnCode(SciiResult.RETURN_CODE_OK);

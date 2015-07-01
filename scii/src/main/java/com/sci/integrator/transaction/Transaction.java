@@ -96,6 +96,7 @@ public abstract class Transaction implements ITransaction, Serializable
   private TransactionError  trxError;
   private int               retries;
 
+  
   // ***** Properties *****
 
   @Transient
@@ -328,7 +329,7 @@ public abstract class Transaction implements ITransaction, Serializable
     this.trxError = trxError;
   }
 
-  // *** Retries ***
+// *** Retries ***
   @Column(name = "retries")
   public int getRetries()
   {

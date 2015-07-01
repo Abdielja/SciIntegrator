@@ -120,8 +120,7 @@ public class TransactionRestController
     // *** Added june 25, 2015 ***
     // TODO Tests pending
     trx.setcreationDate(new Date());
-    
-    
+        
     // ** Validate Transaction Before Saving**
     System.out.println("  Validating...");
     try
