@@ -375,6 +375,20 @@ public class TransactionOpen extends Transaction
         product.setTaxCategoryId((String)XmlHelper.readFromXml(xmlProductList.item(i), "taxCategoryId", XPathConstants.STRING));
         product.setuPCEAN((String)XmlHelper.readFromXml(xmlProductList.item(i), "uPCEAN", XPathConstants.STRING));
 
+        // *** Load TaxRates for this product ***
+        double totalTaxRate = 0;
+        NodeList xmlTaxRateList = (NodeList)XmlHelper.readFromXml(xmlProductList.item(i), "taxRates/taxRate", XPathConstants.NODESET);
+        for(int j=0; j < xmlTaxRateList.getLength(); j++)
+        {
+          String taxName = (String)XmlHelper.readFromXml(xmlTaxRateList.item(j), "name", XPathConstants.STRING);
+          double taxRate = (Double)XmlHelper.readFromXml(xmlTaxRateList.item(j), "rate", XPathConstants.NUMBER);
+          totalTaxRate += taxRate;
+          System.out.println("  TaxRate       - " + taxName + " : " + taxRate);
+        }
+        product.setTotalTaxRate(totalTaxRate);
+        System.out.println("  Total TaxRate : " + totalTaxRate);
+        
+        
         // *** Load Pricing Lists for this Product ***
    
         NodeList xmlPriceList = (NodeList)XmlHelper.readFromXml(xmlProductList.item(i), "pricingProductPriceList/pricingProductPrice", XPathConstants.NODESET);

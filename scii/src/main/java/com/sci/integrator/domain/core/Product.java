@@ -42,6 +42,7 @@ public class Product implements Serializable
   private double standardPrice;
   private String productOrganizationId;
   private String taxCategoryId;
+  private double totalTaxRate;
   private String uPCEAN;
   private String storageBinId;
   private String storageBinOrganizationId;
@@ -237,6 +238,23 @@ public class Product implements Serializable
   public void setTaxCategoryId(String taxCategoryId)
   {
     this.taxCategoryId = taxCategoryId;
+  }
+
+  /**
+   * @return the totalTaxRate
+   */
+  @Column(name="total_tax")  
+  public double getTotalTaxRate()
+  {
+    return totalTaxRate;
+  }
+
+  /**
+   * @param totalTaxRate the totalTaxRate to set
+   */
+  public void setTotalTaxRate(double totalTaxRate)
+  {
+    this.totalTaxRate = totalTaxRate;
   }
 
   /**
