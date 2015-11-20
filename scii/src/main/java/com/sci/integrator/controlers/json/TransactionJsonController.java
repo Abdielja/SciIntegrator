@@ -82,7 +82,7 @@ public class TransactionJsonController
 
     User user = trx.getcreatedBy();
     
-    // ** Authenticate iser credentials **
+    // ** Authenticate user credentials **
     
     System.out.println("  Authenticating User Credentials...");
 
